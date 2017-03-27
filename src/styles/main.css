@@ -1,0 +1,14 @@
+.header{
+  background: rgb(198,47,47);
+}
+
+.content{
+  background: white;
+  height: calc(100vh - 64px);
+  overflow-y: scroll;
+}
+
+.title{
+  color: white;
+  font-size: 1.5rem;
+}
