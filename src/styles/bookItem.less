@@ -1,0 +1,37 @@
+:local{
+  .box{
+    height: 100px;
+    border-bottom: 1px solid rgb(225, 225, 226);
+    padding: 10px 20px;
+    cursor: pointer;
+    &:hover{
+      background: rgb(225,225,226);
+    }
+    img{
+      height: 80px;
+      width: 60px;
+    }
+    p{
+      float: right;
+      text-align: left;
+      width: calc(~'100% - 80px');
+      height: 80px;
+    }
+    p span{
+      white-space: nowrap;
+      width: 100%;
+      display: inline-block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    p span:first-child{
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    p span:last-child{
+      font-size: 1.2rem;
+      color:rgb(182,182,182);
+    }
+  }
+
+}

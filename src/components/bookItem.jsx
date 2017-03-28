@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/bookItem.css';
+import styles from '../styles/bookItem.less';
 
 class BookItem extends React.Component{
   render() {

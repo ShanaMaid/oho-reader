@@ -39,7 +39,7 @@ function getDefaultModules() {
       },
       {
         test: /\.less/,
-        loader: 'style-loader!css-loader!less-loader'
+        loader: 'style-loader!css-loader!less-loader?modules&localIdentName=[name]_[local]-[hash:base64:5]'
       },
       {
         test: /\.styl/,

@@ -1,52 +1,48 @@
-import 'normalize.css'
-import React from 'react';
-// import 'antd/dist/antd.css';
-import {Input, Layout, Menu, Dropdown, Button, Icon} from 'antd';
-import BookItem from './bookItem';
-import styles from '../styles/main.css';
 
-import '../styles/common.css'
+import React from 'react'
+import {Layout, Menu, Dropdown, Icon} from 'antd'
+import { Link } from 'react-router-dom'
+import BookItem from './bookItem'
+import styles from '../styles/main.less'
 
 
-const Search = Input.Search;
-const { Header, Content } = Layout;
-const SubMenu = Menu.SubMenu;
-const MenuItemGroup = Menu.ItemGroup;
+
+const { Header, Content } = Layout
 
 class AppComponent extends React.Component {
   constructor(props) {
-    super(props);
-    this.bookList = [];
+    super(props)
+    this.bookList = []
     this.menu = (
       <Menu>
         <Menu.Item key="0">
           <a href="http://www.alipay.com/">向日葵与薄荷草</a>
         </Menu.Item>
         <Menu.Item key="1">
-          <a href="http://www.taobao.com/"><Icon type="setting"/>设置</a>
+          <Link to="/setting"><Icon type="setting"/>设置</Link>
         </Menu.Item>
         <Menu.Item key="2">
-          <a href="http://www.tmall.com/">关于</a>
+          <Link to="/about"><Icon type="question-circle-o"/>关于</Link>
         </Menu.Item>
       </Menu>
-    );
+    )
   }
  
   componentWillMount() {
-    this.bookList.push(<BookItem/>);
-    this.bookList.push(<BookItem/>);
-    this.bookList.push(<BookItem/>);
-    this.bookList.push(<BookItem/>);
-    this.bookList.push(<BookItem/>);
-    this.bookList.push(<BookItem/>);
-    this.bookList.push(<BookItem/>);
-    this.bookList.push(<BookItem/>);
-    this.bookList.push(<BookItem/>);
-    this.bookList.push(<BookItem/>);
-    this.bookList.push(<BookItem/>);
-    this.bookList.push(<BookItem/>);
-    this.bookList.push(<BookItem/>);
-    this.bookList.push(<BookItem/>);
+    this.bookList.push(<BookItem/>)
+    this.bookList.push(<BookItem/>)
+    this.bookList.push(<BookItem/>)
+    this.bookList.push(<BookItem/>)
+    this.bookList.push(<BookItem/>)
+    this.bookList.push(<BookItem/>)
+    this.bookList.push(<BookItem/>)
+    this.bookList.push(<BookItem/>)
+    this.bookList.push(<BookItem/>)
+    this.bookList.push(<BookItem/>)
+    this.bookList.push(<BookItem/>)
+    this.bookList.push(<BookItem/>)
+    this.bookList.push(<BookItem/>)
+    this.bookList.push(<BookItem/>)
   }
 
   render() {
@@ -55,25 +51,25 @@ class AppComponent extends React.Component {
         <Layout>
           <Header className={styles.header}>
             <span className={styles.title}>oho阅读</span>
-            <Dropdown 
-              overlay={this.menu} 
-              placement="bottomRight" 
+            <Dropdown
+              overlay={this.menu}
+              placement="bottomRight"
               trigger={['click']}
               >
               <img src="../images/menu.png" className={styles.dropdown}/>
             </Dropdown>
-            <Icon type="search" className={styles.search}/>
+            <Link to="/search"><Icon type="search" className={styles.search}/></Link>
           </Header>
           <Content className={styles.content}>
             {this.bookList}
           </Content>
         </Layout>
       </div>
-    );
+    )
   }
 }
 
 AppComponent.defaultProps = {
-};
+}
 
-export default AppComponent;
+export default AppComponent

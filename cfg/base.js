@@ -17,7 +17,8 @@ module.exports = {
   output: {
     path: path.join(__dirname, '/../dist/assets'),
     filename: 'app.js',
-    publicPath: defaultSettings.publicPath
+    publicPath: defaultSettings.publicPath,
+    chunkFilename: '[name].[chunkhash:5].chunk.js'
   },
   devServer: {
     contentBase: './src/',
@@ -25,7 +26,8 @@ module.exports = {
     hot: true,
     port: defaultSettings.port,
     publicPath: defaultSettings.publicPath,
-    noInfo: false
+    noInfo: false,
+    chunkFilename: '[name].[chunkhash:5].chunk.js'
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],
