@@ -27,7 +27,14 @@ module.exports = {
     port: defaultSettings.port,
     publicPath: defaultSettings.publicPath,
     noInfo: false,
-    chunkFilename: '[name].[chunkhash:5].chunk.js'
+    chunkFilename: '[name].[chunkhash:5].chunk.js',
+    proxy: {
+      '/api': {
+        target: 'http://api.zhuishushenqi.com/',
+        pathRewrite: {'^/api' : '/'},
+        changeOrigin: true
+      }
+   }
   },
   resolve: {
     extensions: ['', '.js', '.jsx'],

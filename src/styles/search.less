@@ -1,0 +1,49 @@
+:local{
+  .header{
+    background: rgb(198,47,47);
+    padding:0px 20px;
+  }
+
+  .content{
+    background: white;
+    height: calc(~'100vh - 64px');
+    overflow-y: scroll;
+  }
+
+  .icon-base{
+    font-size: 1.6rem;
+    color:white;
+    display: inline-block;
+    line-height: 64px;
+    height: inherit;
+  }
+
+  .pre{
+    .icon-base;
+    border-right: 1px solid rgb(169, 169, 169);
+    padding-right: 10px;
+    float: left;
+  }
+
+  .search{
+    .icon-base;
+    border-left: 1px solid rgb(169, 169, 169);
+    padding-left: 10px;
+    float: right;
+  }
+
+  .searchInput{
+    width: calc(~'100% - 3.2rem - 40px');
+    background-color: rgba(255, 255, 255, 0);
+    margin-left: 10px;
+    outline: none;
+    border: none;
+    font-size: 1.2em;
+    color: white;
+    &:focus{
+      border: none;
+      outline: none;
+      box-shadow: none;
+    }
+  }
+}
