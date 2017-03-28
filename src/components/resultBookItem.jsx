@@ -25,10 +25,15 @@ class ResultBookItem extends React.Component{
     return true
   }
 
+  handleImageErrored(e){
+    console.log(e.target)
+    e.target.src = '../images/error.jpg'
+  }
+
   render() {
     return (
       <div className={styles.box}>
-        <img src={this.props.data.cover} />
+        <img src={this.props.data.cover} onError={this.handleImageErrored}/>
         <p>
           <span>{this.props.data.title}</span><br/>
           <span>{this.props.data.latelyFollower}人在追 | {this.props.data.retentionRatio}读者留存 | {this.props.data.author}著</span>

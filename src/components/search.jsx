@@ -19,8 +19,17 @@ class Search extends React.Component{
       fetch('/api/book/fuzzy-search?query=' + this.state.searchValue + '&start=0')
       .then(res => res.json())
       .then(data => {
-        this.setState({bookList: data.books})
+        data.books.map((item, index, arr) => {
+          if (item.cover.search(/agent/i) === -1) {
+            arr[index].cover = 'http://api.zhuishushenqi.com' + item.cover
+          }
+          else{
+            arr[index].cover = item.cover.replace(/\/agent\//, '')
+          }
+          
+        })
         console.log(data.books)
+        this.setState({bookList: data.books})
       })
       .catch(error => {
         console.log(error)
@@ -33,7 +42,7 @@ class Search extends React.Component{
 
   }
 
-  handleChange(e){
+  handleChange(e) {
     this.setState({searchValue:e.target.value});
   }
 
@@ -57,13 +66,13 @@ class Search extends React.Component{
           <Content className={styles.content}>
             {
               this.state.bookList.length != 0 ? this.state.bookList.map((item) =>{
-                if (item.cover.search(/agent/i) === -1) {
-                  item.cover = 'http://api.zhuishushenqi.com' + item.cover
-                }
-                else{
-                  item.cover = item.cover.replace(/\/agent\//, '')
-                }
-                console.log(item.title)
+                // if (item.cover.search(/agent/i) === -1) {
+                //   item.cover = 'http://api.zhuishushenqi.com' + item.cover
+                // }
+                // else{
+                //   item.cover = item.cover.replace(/\/agent\//, '')
+                // }
+                // console.log(item.title)
                 return <ResultBookItem data={item}/>
             }) : '没有找到搜索结果'}
           </Content>
