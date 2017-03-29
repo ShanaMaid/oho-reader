@@ -19,7 +19,6 @@ class Search extends React.Component{
   }
 
   componentWillReceiveProps(nextProps){
-    console.log(nextProps)
     this.setState({bookList: nextProps.fetchBookList.books, searchValue: nextProps.fetchBookList.name})
   }
 

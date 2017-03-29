@@ -23,7 +23,7 @@ const RouteConfig = () => (
       <Route path="/search" exact component={search} />
       <Route path="/setting" exact component={setting} />
       <Route path="/searchResult" exact component={searchResult} />
-      <Route path="/bookIntroduce" exact component={bookIntroduce} />
+      <Route path="/bookIntroduce/:id"  component={bookIntroduce} />
       <Route path="/about" exact component={about} />
       <Route path="/read" exact component={read} />
       <Route component={index} />

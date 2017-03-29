@@ -1,8 +1,9 @@
 import  'whatwg-fetch'
 
 export const GET_BOOKLIST = 'GET_BOOKLIST';
+export const GET_BOOKITEM = 'GET_BOOKITEM';
 
-export const receivePosts = (data, name) => {
+export const receiveBookList = (data, name) => {
   return {
     type: GET_BOOKLIST,
     data,
@@ -10,6 +11,7 @@ export const receivePosts = (data, name) => {
   }
 }
 
+//搜索书籍
 export const getBookList = (name) => {
   return  dispatch => {
     fetch('/api/book/fuzzy-search?query=' + name + '&start=0')
@@ -25,7 +27,27 @@ export const getBookList = (name) => {
         })
         return data
       })
-      .then(data => dispatch(receivePosts(data, name)))
+      .then(data => dispatch(receiveBookList(data, name)))
+      .catch(error => {
+        console.log(error)
+      })
+  }
+}
+
+
+export const receiveBookItem = (data) => {
+  return {
+    type: GET_BOOKITEM,
+    data
+  }
+}
+
+//获取书籍详情
+export const getBookItem = (id) => {
+  return dispatch => {
+    fetch('/api/book/' + id)
+      .then(res => res.json())
+      .then(data => dispatch(receiveBookItem(data)))
       .catch(error => {
         console.log(error)
       })

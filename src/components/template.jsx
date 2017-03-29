@@ -1,17 +1,22 @@
 import {connect} from 'react-redux';
-import {getBookList} from '../redux/action/index'
+import {getBookList, getBookItem} from '../redux/action/index'
 
 const Main = (component) => {
   const mapStateToProps = (state) => {
-    let {fetchBookList} = state
+    let {
+      fetchBookList,
+      fetchBookItem
+    } = state
     return {
-      fetchBookList
+      fetchBookList,
+      fetchBookItem
     }
   }
 
   const mapDispatchToProps = (dispatch) => {
     return {
-      search: (name) => dispatch(getBookList(name))
+      search: (name) => dispatch(getBookList(name)),
+      getBokkIntroduce: (id) => dispatch(getBookItem(id))
     }
   }
 
