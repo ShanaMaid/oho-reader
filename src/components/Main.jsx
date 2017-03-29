@@ -3,6 +3,7 @@ import {Layout, Menu, Dropdown, Icon} from 'antd'
 import { Link } from 'react-router-dom'
 import BookItem from './bookItem'
 import styles from '../styles/main.less'
+import template from './template'
 
 
 
@@ -44,9 +45,18 @@ class AppComponent extends React.Component {
     this.bookList.push(<BookItem/>)
   }
 
+  componentDidMount() {
+    // this.props.search('一念')
+    // this.refs.main.setAttribute('class','animated bounceInLeft')
+  }
+
+  componentWillUnmount() {
+    // this.refs.main.setAttribute('class','animated bounceOutRight')
+  }
+
   render() {
     return (
-      <div>
+      <div className="page" ref="main">
         <Layout>
           <Header className={styles.header}>
             <span className={styles.title}>oho阅读</span>
@@ -71,4 +81,4 @@ class AppComponent extends React.Component {
 AppComponent.defaultProps = {
 }
 
-export default AppComponent
+export default template(AppComponent)

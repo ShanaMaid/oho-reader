@@ -2,31 +2,9 @@ import React from 'react';
 import styles from '../styles/resultBookItem.less';
 
 class ResultBookItem extends React.Component{
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: '1',
-      latelyFollower: '',
-      retentionRatio: '',
-      author: '',
-      cover: ''
-    }
-  }
 
-  componentWillMount() {
-    this.setState(this.props.data)
-  }
-
-  componentWillUpdate(nextProps, nextStatus) {
-
-  }
-
-  shouldComponentUpdate(nextProps, nextStatus) {
-    return true
-  }
-
+  
   handleImageErrored(e){
-    console.log(e.target)
     e.target.src = '../images/error.jpg'
   }
 

@@ -1,13 +1,24 @@
 import 'core-js/fn/object/assign'
 import React from 'react'
 import {render} from 'react-dom'
-import route from './router/route' //路由配置
-import 'whatwg-fetch'
+import Route from './router/route'
+import {Provider} from 'react-redux';
+import store from './redux/store/store'
+
 import 'normalize.css'
+import  'animate.css'
 import './styles/common.css'
+
+
+const app = document.getElementById('app')
+
+store.subscribe(() => { //监听state变化
+});
 
 
 // Render the main component into the dom
 render(
-  <div>{route}</div>
-  , document.getElementById('app'))
+  <Provider store={store}>
+    <Route />
+  </Provider>
+  , app)

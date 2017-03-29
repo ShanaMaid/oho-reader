@@ -27,7 +27,7 @@ function getDefaultModules() {
     loaders: [
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader?modules&localIdentName=[name]_[local]-[hash:base64:5]'
+        loader: 'style-loader!css-loader'
       },
       {
         test: /\.sass/,
