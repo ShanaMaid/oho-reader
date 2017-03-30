@@ -1,4 +1,4 @@
-import {GET_BOOKLIST, GET_BOOKITEM} from '../action/index'
+import {GET_BOOKLIST, GET_BOOKITEM} from '../action/index';
 
 
 //搜索书籍

@@ -69,6 +69,7 @@
     "babel-plugin-import": "^1.1.1",
     "core-js": "^2.0.0",
     "normalize.css": "^4.0.0",
+    "randomcolor": "^0.4.4",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
     "react-overdrive": "0.0.4",

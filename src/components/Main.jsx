@@ -29,20 +29,7 @@ class AppComponent extends React.Component {
   }
  
   componentWillMount() {
-    this.bookList.push(<BookItem/>)
-    this.bookList.push(<BookItem/>)
-    this.bookList.push(<BookItem/>)
-    this.bookList.push(<BookItem/>)
-    this.bookList.push(<BookItem/>)
-    this.bookList.push(<BookItem/>)
-    this.bookList.push(<BookItem/>)
-    this.bookList.push(<BookItem/>)
-    this.bookList.push(<BookItem/>)
-    this.bookList.push(<BookItem/>)
-    this.bookList.push(<BookItem/>)
-    this.bookList.push(<BookItem/>)
-    this.bookList.push(<BookItem/>)
-    this.bookList.push(<BookItem/>)
+    this.bookList.push(<BookItem key='1'/>)
   }
 
   componentDidMount() {

@@ -1,0 +1,155 @@
+:local{
+  .header{
+    background: rgb(198,47,47);
+    padding:0px 20px;
+  }
+
+  .content{
+    background: white;
+    height: calc(~'100vh - 64px');
+    overflow-y: scroll;
+  }
+
+  .icon-base{
+    font-size: 1.6rem;
+    color:white;
+    display: inline-block;
+    line-height: 64px;
+    height: inherit;
+  }
+
+  .pre{
+    .icon-base;
+    padding-right: 10px;
+    float: left;
+  }
+
+  .title{
+    font-size: 1.1rem;
+    color: white;
+    margin-left: 20px;
+  }
+
+  .head-font-base{
+    font-size: 0.95rem;
+    color: white;
+    opacity: 0.6;
+    float: right;
+  }
+
+  .download{
+    .head-font-base;
+
+  }
+
+  .share{
+    .head-font-base;
+    margin-left: 20px;
+  }
+
+  .box{
+    height: 100px;
+    padding: 10px 15px;
+    
+    img{
+      height: 80px;
+      width: 60px;
+    }
+
+    p{
+      float: right;
+      text-align: left;
+      width: calc(~'100% - 80px');
+      height: 80px;
+      span{
+        white-space: nowrap;
+        width: 100%;
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .bookName{
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: rgb(89,89,89);
+        height: 30px;
+      }
+
+      .bookMsg{
+        font-size: 0.8rem;
+        color: rgb(182,182,182);
+        em{
+          color: rgb(202, 94, 39);
+          font-weight: bold;
+        }
+      }
+
+      .updated{
+        color:rgb(182,182,182);
+      }
+    }
+
+    
+  }
+
+  .control{
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+
+    button{
+      background-color: rgb(180, 50, 31) !important;
+      color: white !important;
+      border: none !important;
+      width: 45%;
+      padding: 10px 0;
+    }
+  }
+
+  .number{
+    padding: 20px 35px;
+    border-top: 1px solid rgb(225,225,226);
+    border-bottom: 1px solid rgb(225,225,226);
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    color: black;
+    font-size: 1.1em;
+    font-weight: bold;
+    p span {
+      color: rgb(127,127,127);
+    }
+  }
+  
+  .tags{
+    padding: 10px 15px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    border-bottom: 1px solid rgb(225,225,226);
+    .tag{
+      opacity: 0.6;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+  }
+
+  .introduce{
+    padding: 20px 35px;
+    font-size: 0.8rem;
+    pre{
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  }
+
+  .loading{
+    color: rgb(198,47,47);
+    font-size: 1.1rem;
+    i{
+      background-color: rgb(198,47,47);
+    }
+  }
+}

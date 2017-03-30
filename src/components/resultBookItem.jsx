@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../styles/resultBookItem.less';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 class ResultBookItem extends React.Component{
 
@@ -11,7 +11,7 @@ class ResultBookItem extends React.Component{
 
   render() {
     return (
-      <Link to={"/bookIntroduce/" + this.props.data._id}>
+      <Link to={'/bookIntroduce/' + this.props.data._id}>
       <div className={styles.box}>
         <img src={this.props.data.cover} onError={this.handleImageErrored}/>
         <p>
