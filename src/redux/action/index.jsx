@@ -2,6 +2,9 @@ import  'whatwg-fetch'
 
 export const GET_BOOKLIST = 'GET_BOOKLIST';
 export const GET_BOOKITEM = 'GET_BOOKITEM';
+export const ADD_LIST = 'ADD_LIST';
+export const REMOVE_LIST = 'REMOVE_LIST';
+export const GET_LIST = 'GET_LIST';
 
 export const receiveBookList = (data, name) => {
   return {
@@ -80,8 +83,6 @@ export const getBookItem = (id) => {
         else {
           data.updated = Math.floor(year) + '年';
         }
-
-        // data.longIntro = data.longIntro.replace(/\r\n/, '<br/>');
         data.wordCount += '字';
         return data;
       })
@@ -92,3 +93,27 @@ export const getBookItem = (id) => {
   }
 }
 
+
+
+//删除书籍
+export const deleteBook = (data) => {
+  return {
+    type: REMOVE_LIST,
+    data
+  }
+}
+
+//添加书籍
+export const addBook = (data) => {
+  return {
+    type: ADD_LIST,
+    data
+  }
+}
+
+//获取书籍
+export const getBook = () => {
+  return {
+    type: GET_LIST
+  }
+}

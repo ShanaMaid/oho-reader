@@ -13,6 +13,9 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props)
     this.bookList = []
+    this.state = {
+      boolList: []
+    }
     this.menu = (
       <Menu>
         <Menu.Item key="0">
@@ -29,16 +32,19 @@ class AppComponent extends React.Component {
   }
  
   componentWillMount() {
+
     this.bookList.push(<BookItem key='1'/>)
   }
 
   componentDidMount() {
+    console.log(typeof this.props.bookList);
     // this.props.search('一念')
     // this.refs.main.setAttribute('class','animated bounceInLeft')
   }
 
-  componentWillUnmount() {
-    // this.refs.main.setAttribute('class','animated bounceOutRight')
+  componentWillReceiveProps(nextProps){
+    console.log(nextProps.bookList + '1111')
+    this.setState({bookList: nextProps.bookList})
   }
 
   render() {
