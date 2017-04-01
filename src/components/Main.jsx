@@ -62,7 +62,7 @@ class AppComponent extends React.Component {
               placement="bottomRight"
               trigger={['click']}
               >
-              <img src="../images/menu.png" className={styles.dropdown}/>
+              <img src="/static/menu.png" className={styles.dropdown}/>
             </Dropdown>
             <Link to="/search"><Icon type="search" className={styles.search}/></Link>
           </Header>

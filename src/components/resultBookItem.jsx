@@ -6,7 +6,7 @@ class ResultBookItem extends React.Component{
 
   
   handleImageErrored(e){
-    e.target.src = '../images/error.jpg'
+    e.target.src = '/static/error.jpg'
   }
 
   render() {
