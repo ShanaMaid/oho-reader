@@ -7,7 +7,7 @@ import randomcolor from 'randomcolor';
 
 const { Header, Content } = Layout
 
-
+let errorLoading = require('../images/error.jpg')
 class BookIntroduce extends React.Component{
   constructor(props) {
     super(props);
@@ -45,7 +45,7 @@ class BookIntroduce extends React.Component{
   }
 
   handleImageErrored(e){
-    e.target.src = '/static/error.jpg';
+    e.target.src = errorLoading;
   }
 
 

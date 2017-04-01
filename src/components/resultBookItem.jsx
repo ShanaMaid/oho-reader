@@ -2,11 +2,13 @@ import React from 'react';
 import styles from '../styles/resultBookItem.less';
 import { Link } from 'react-router-dom';
 
+let errorLoading = require('../images/error.jpg')
+
 class ResultBookItem extends React.Component{
 
   
   handleImageErrored(e){
-    e.target.src = '/static/error.jpg'
+    e.target.src = errorLoading;
   }
 
   render() {

@@ -6,6 +6,7 @@ import styles from '../styles/main.less'
 import template from './template'
 import ReactPullToRefresh from 'react-pull-to-refresh'
 
+let menuPng = require('../images/menu.png');
 
 const { Header, Content } = Layout
 
@@ -62,7 +63,7 @@ class AppComponent extends React.Component {
               placement="bottomRight"
               trigger={['click']}
               >
-              <img src="/static/menu.png" className={styles.dropdown}/>
+              <img src={menuPng} className={styles.dropdown}/>
             </Dropdown>
             <Link to="/search"><Icon type="search" className={styles.search}/></Link>
           </Header>
