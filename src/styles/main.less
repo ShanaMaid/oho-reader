@@ -29,6 +29,7 @@
     margin-top: 20px;
     margin-right: 20px;
   }
+
 }
 
 :global{
@@ -40,7 +41,27 @@
   .ant-dropdown-menu{
     padding: 0px 25px;
   }
+  
+  .ptr-element{
+    display: none;
+    text-align: center;
+    span{
+      i{
+        background-color: #c62f2f;
+      }
+    }
+    p{
+      font-size: 1.2rem;
+      text-align: center;
+    }
+  }
 
+  .ptr-loading{
+    .ptr-element{
+      display: block;
+      padding: 10px 0px;
+    }
+  }
   
 }
 

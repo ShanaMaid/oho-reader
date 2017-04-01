@@ -1,5 +1,5 @@
 import React from 'react';
-import {Layout, Icon, Input, Spin, Button, Tag} from 'antd';
+import {Layout, Icon, Input, Spin, Button, Tag, message} from 'antd';
 import { Link } from 'react-router-dom';
 import template from './template';
 import styles from '../styles/bookIntroduce.less';
@@ -13,20 +13,41 @@ class BookIntroduce extends React.Component{
     super(props);
     this.data = {}
     this.state = {
-      loading: true
+      loading: true,
+      save: false
     }
-    this.props.getBokkIntroduce(this.props.match.params.id);
+    message.config({
+      top: 500,
+      duration: 2,
+    });
+    this.props.getBookIntroduce(this.props.match.params.id);
+    this.addBook = () => {
+      // this.props.getBookIntroduce(this.props.match.params.id);
+      this.props.addBook(this.data);
+      message.info('《' + this.data.title + '》加入书架');
+       this.setState({save:true});
+    }
+
+    this.deleteBook = () => {
+      this.props.deleteBook(this.data);
+      this.setState({save:false});
+      message.info('《' + this.data.title + '》从书架移除');
+    }
+  }
+
+  componentWillMount() {
+
   }
 
   componentWillReceiveProps(nextProps) {
-    this.data = nextProps.fetchBookItem
-    this.setState({loading: false})
-    console.log(this.state.loading)
+    this.data = nextProps.fetchBookItem;
+    this.setState({loading: false, save: nextProps.bookList.id.has(nextProps.fetchBookItem._id)});
   }
 
   handleImageErrored(e){
-    e.target.src = '../images/error.jpg'
+    e.target.src = '../images/error.jpg';
   }
+
 
   render() {
     return (
@@ -38,7 +59,7 @@ class BookIntroduce extends React.Component{
             <span className={styles.share}>分享</span>
             <span className={styles.download}>缓存全部</span>
           </Header>
-          <Spin className={styles.loading} spinning={this.state.loading} tip="书籍详情加载中...">
+          <Spin className={styles.loading} spinning={this.state.loading} tip='书籍详情加载中...'>
           <Content className={styles.content}>
             {
               this.state.loading ? '': 
@@ -53,8 +74,12 @@ class BookIntroduce extends React.Component{
                       </p>
                     </div>
                     <div className={styles.control}>
-                      <Button icon="plus" size="large">追更新</Button>
-                      <Button icon="search" size="large">开始阅读</Button>
+                      {
+                        this.state.save ?
+                        (<Button icon='minus' size='large' className={styles.cancel} onClick={this.deleteBook}>不追了</Button>) :
+                        (<Button icon='plus' size='large' onClick={this.addBook}>追更新</Button>)
+                      }
+                      <Button icon='search' size='large'>开始阅读</Button>
                     </div>
                     <div className={styles.number}>
                       <p><span>追书人数</span><br/>{this.data.latelyFollower}</p>

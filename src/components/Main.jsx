@@ -1,10 +1,10 @@
 import React from 'react'
-import {Layout, Menu, Dropdown, Icon} from 'antd'
+import {Layout, Menu, Dropdown, Icon, Spin} from 'antd'
 import { Link } from 'react-router-dom'
 import BookItem from './bookItem'
 import styles from '../styles/main.less'
 import template from './template'
-
+import ReactPullToRefresh from 'react-pull-to-refresh'
 
 
 const { Header, Content } = Layout
@@ -12,9 +12,8 @@ const { Header, Content } = Layout
 class AppComponent extends React.Component {
   constructor(props) {
     super(props)
-    this.bookList = []
     this.state = {
-      boolList: []
+      bookList: this.props.bookList.list
     }
     this.menu = (
       <Menu>
@@ -33,7 +32,6 @@ class AppComponent extends React.Component {
  
   componentWillMount() {
 
-    this.bookList.push(<BookItem key='1'/>)
   }
 
   componentDidMount() {
@@ -43,8 +41,14 @@ class AppComponent extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log(nextProps.bookList + '1111')
     this.setState({bookList: nextProps.bookList})
+  }
+
+  handleRefresh(resolve, reject) {
+  // do some async code here
+      setTimeout(resolve,2000);
+      // console.log(1111);
+      // resolve();
   }
 
   render() {
@@ -62,8 +66,17 @@ class AppComponent extends React.Component {
             </Dropdown>
             <Link to="/search"><Icon type="search" className={styles.search}/></Link>
           </Header>
+          
           <Content className={styles.content}>
-            {this.bookList}
+          <ReactPullToRefresh
+            onRefresh={this.handleRefresh}
+            icon={(<Spin/>)}
+           
+          >
+            {
+              this.state.bookList.map((item, index) => <BookItem data={item} key={index} />)
+            }
+          </ReactPullToRefresh>
           </Content>
         </Layout>
       </div>

@@ -4,5 +4,8 @@
     "stage-0",
     "react"
   ],
-  "plugins": [["import", { "libraryName": "antd", "style": true }]]
+  "plugins": [
+    ["import", { "libraryName": "antd", "style": true }],
+    "transform-es2015-typeof-symbol"
+  ]
 }

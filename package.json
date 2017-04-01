@@ -67,6 +67,7 @@
     "animate.css": "^3.5.2",
     "antd": "^2.8.3",
     "babel-plugin-import": "^1.1.1",
+    "babel-preset-es2015": "^6.24.0",
     "core-js": "^2.0.0",
     "normalize.css": "^4.0.0",
     "randomcolor": "^0.4.4",
