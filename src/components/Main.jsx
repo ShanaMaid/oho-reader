@@ -18,7 +18,7 @@ class AppComponent extends React.Component {
     this.menu = (
       <Menu>
         <Menu.Item key="0">
-          <a href="http://www.alipay.com/">向日葵与薄荷草</a>
+          <a href="#">哦豁阅读器</a>
         </Menu.Item>
         <Menu.Item key="1">
           <Link to="/setting"><Icon type="setting"/>设置</Link>
