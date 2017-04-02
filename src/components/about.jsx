@@ -1,7 +1,8 @@
 import React from 'react';
-import {Layout, Icon, Input, Spin, Button, Tag, message} from 'antd';
+import {Layout, Icon, Button} from 'antd';
 import { Link } from 'react-router-dom';
 import styles from '../styles/about.less';
+import template from './template';
 
 const { Header, Content } = Layout;
 

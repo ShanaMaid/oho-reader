@@ -27,7 +27,7 @@ const Main = (component) => {
       getBookIntroduce: (id) => dispatch(getBookItem(id)),
       deleteBook: (data) => dispatch(deleteBook(data)),
       addBook: (data) => dispatch(addBook(data)),
-      getBook: () => dispatch(getBook()),
+      getBook: () => dispatch(getBook())
     }
   }
 

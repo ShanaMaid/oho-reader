@@ -31,18 +31,9 @@ class AppComponent extends React.Component {
     )
   }
  
-  componentWillMount() {
-
-  }
-
-  componentDidMount() {
-    console.log(typeof this.props.bookList);
-    // this.props.search('一念')
-    // this.refs.main.setAttribute('class','animated bounceInLeft')
-  }
 
   componentWillReceiveProps(nextProps){
-    this.setState({bookList: nextProps.bookList})
+    this.setState({bookList: nextProps.bookList.list})
   }
 
   handleRefresh(resolve, reject) {
@@ -75,7 +66,7 @@ class AppComponent extends React.Component {
            
           >
             {
-              this.state.bookList.map((item, index) => <BookItem data={item} key={index} />)
+              this.state.bookList.map((item, index) => <BookItem data={item} deleteBook={this.props.deleteBook} key={index} />)
             }
           </ReactPullToRefresh>
           </Content>

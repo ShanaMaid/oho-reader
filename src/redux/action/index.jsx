@@ -1,4 +1,4 @@
-import  'whatwg-fetch'
+import  'whatwg-fetch';
 
 export const GET_BOOKLIST = 'GET_BOOKLIST';
 export const GET_BOOKITEM = 'GET_BOOKITEM';
@@ -110,6 +110,7 @@ export const addBook = (data) => {
     data
   }
 }
+
 
 //获取书籍
 export const getBook = () => {

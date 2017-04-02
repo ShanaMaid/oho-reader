@@ -1,9 +1,10 @@
 import React from 'react';
-import {Layout, Icon, Input, Spin, Button, Tag, message} from 'antd';
+import {Layout, Icon, Spin, Button, Tag, message} from 'antd';
 import { Link } from 'react-router-dom';
 import template from './template';
 import styles from '../styles/bookIntroduce.less';
 import randomcolor from 'randomcolor';
+
 
 const { Header, Content } = Layout
 
@@ -22,15 +23,12 @@ class BookIntroduce extends React.Component{
     });
     this.props.getBookIntroduce(this.props.match.params.id);
     this.addBook = () => {
-      // this.props.getBookIntroduce(this.props.match.params.id);
       this.props.addBook(this.data);
       message.info('《' + this.data.title + '》加入书架');
-       this.setState({save:true});
     }
 
     this.deleteBook = () => {
       this.props.deleteBook(this.data);
-      this.setState({save:false});
       message.info('《' + this.data.title + '》从书架移除');
     }
   }
@@ -62,7 +60,7 @@ class BookIntroduce extends React.Component{
           <Spin className={styles.loading} spinning={this.state.loading} tip='书籍详情加载中...'>
           <Content className={styles.content}>
             {
-              this.state.loading ? '': 
+              this.state.loading ? '':
                 (
                   <div>
                     <div className={styles.box}>
@@ -88,7 +86,7 @@ class BookIntroduce extends React.Component{
                     </div>
                     <div className={styles.tags}>
                       {
-                        this.data.tags.map((item, index) => 
+                        this.data.tags.map((item, index) =>
                           <Tag className={styles.tag} color={randomcolor({luminosity: 'dark'})} key={index}>{item}</Tag>
                         )
                       }
