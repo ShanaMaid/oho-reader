@@ -11,6 +11,13 @@ app.use('/api', proxy({
 }
 ));
 
+app.use('/chapter', proxy({
+  target: 'http://chapter2.zhuishushenqi.com/',
+  pathRewrite: {'^/chapter' : '/chapter'},
+  changeOrigin: true
+}
+));
+
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });

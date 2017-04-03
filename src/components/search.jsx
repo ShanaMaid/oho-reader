@@ -29,6 +29,7 @@ class Search extends React.Component{
   }
 
   componentWillReceiveProps(nextProps){
+    console.log(nextProps)
     this.setState({bookList: nextProps.fetchBookList.books, searchValue: nextProps.fetchBookList.name, loading: false})
   }
 
@@ -51,9 +52,9 @@ class Search extends React.Component{
               onChange={this.handleChange.bind(this)}
               onPressEnter={this.searchBook}
             />
-            <Icon type="search" className={styles.search} onClick={this.searchBook}/>
+            <Icon type='search' className={styles.search} onClick={this.searchBook}/>
           </Header>
-          <Spin className={styles.loading} spinning={this.state.loading} tip="书籍搜索中...">
+          <Spin className='loading' spinning={this.state.loading} tip="书籍搜索中...">
           <Content className={styles.content}>
             {
               this.state.bookList.length != 0 ?

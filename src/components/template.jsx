@@ -4,7 +4,9 @@ import {
   getBookItem,
   deleteBook,
   addBook,
-  getBook
+  getBook,
+  getBookSource,
+  getChapterContent
   } from '../redux/action/index'
 
 const Main = (component) => {
@@ -12,7 +14,10 @@ const Main = (component) => {
     let {
       fetchBookList,
       fetchBookItem,
-      bookList
+      bookList,
+      bookSource,
+      chapterList,
+      chapterContent
     } = state
     return {
       fetchBookList,
@@ -27,7 +32,9 @@ const Main = (component) => {
       getBookIntroduce: (id) => dispatch(getBookItem(id)),
       deleteBook: (data) => dispatch(deleteBook(data)),
       addBook: (data) => dispatch(addBook(data)),
-      getBook: () => dispatch(getBook())
+      getBook: () => dispatch(getBook()),
+      getBookSource: (id) => dispatch(getBookSource(id)),
+      getChapterContent: (link) => dispatch(getChapterContent(link))
     }
   }
 

@@ -38,6 +38,7 @@ class BookIntroduce extends React.Component{
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
     this.data = nextProps.fetchBookItem;
     this.setState({loading: false, save: nextProps.bookList.id.has(nextProps.fetchBookItem._id)});
   }
@@ -57,7 +58,7 @@ class BookIntroduce extends React.Component{
             <span className={styles.share}>分享</span>
             <span className={styles.download}>缓存全部</span>
           </Header>
-          <Spin className={styles.loading} spinning={this.state.loading} tip='书籍详情加载中...'>
+          <Spin className='loading' spinning={this.state.loading} tip='书籍详情加载中...'>
           <Content className={styles.content}>
             {
               this.state.loading ? '':

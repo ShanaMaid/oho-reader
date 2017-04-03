@@ -25,7 +25,7 @@ const RouteConfig = () => (
       <Route path="/searchResult" exact component={searchResult} />
       <Route path="/bookIntroduce/:id"  component={bookIntroduce} />
       <Route path="/about" exact component={about} />
-      <Route path="/read" exact component={read} />
+      <Route path="/read/:id/:index" exact component={read} />
       <Route component={index} />
     </Switch>
   </Router>

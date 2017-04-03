@@ -6,8 +6,9 @@ import {Provider} from 'react-redux';
 import store from './redux/store/store'
 
 import 'normalize.css'
-import  'animate.css'
+import 'animate.css'
 import './styles/common.css'
+import './styles/common.less'
 
 
 const app = document.getElementById('app')

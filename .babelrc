@@ -6,6 +6,6 @@
   ],
   "plugins": [
     ["import", { "libraryName": "antd", "style": true }],
-    "transform-es2015-typeof-symbol"
+    "transform-es2015-typeof-symbol",
   ]
 }

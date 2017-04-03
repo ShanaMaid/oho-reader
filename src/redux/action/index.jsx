@@ -1,14 +1,23 @@
 import  'whatwg-fetch';
+import {
+  time2Str,
+  url2Real,
+  wordCount2Str
+} from '../../method/index.js'
 
-export const GET_BOOKLIST = 'GET_BOOKLIST';
-export const GET_BOOKITEM = 'GET_BOOKITEM';
+
+export const GET_BOOK_LIST = 'GET_BOOKLIST';
+export const GET_BOOK_ITEM = 'GET_BOOKITEM';
 export const ADD_LIST = 'ADD_LIST';
 export const REMOVE_LIST = 'REMOVE_LIST';
 export const GET_LIST = 'GET_LIST';
+export const GET_BOOK_SOURCE = 'GET_BOOK_SOURCE';
+export const GET_CHAPTER_CONTENT = 'GET_CHAPTER_CONTENT';
+export const GET_CHAPTER_LIST = 'GET_CHAPTER_LIST';
 
 export const receiveBookList = (data, name) => {
   return {
-    type: GET_BOOKLIST,
+    type: GET_BOOK_LIST,
     data,
     name
   }
@@ -20,14 +29,7 @@ export const getBookList = (name) => {
     fetch('/api/book/fuzzy-search?query=' + name + '&start=0')
       .then(res => res.json())
       .then(data => {
-        data.books.map((item) => {
-          if (item.cover.search(/agent/i) === -1) {
-            item.cover = 'http://api.zhuishushenqi.com' + item.cover;
-          }
-          else{
-            item.cover = item.cover.replace(/\/agent\//, '');
-          }
-        })
+        data.books.map((item, index, arr) => { item.cover = url2Real(item.cover)})
         return data;
       })
       .then(data => dispatch(receiveBookList(data, name)))
@@ -40,7 +42,7 @@ export const getBookList = (name) => {
 
 export const receiveBookItem = (data) => {
   return {
-    type: GET_BOOKITEM,
+    type: GET_BOOK_ITEM,
     data
   }
 }
@@ -51,39 +53,9 @@ export const getBookItem = (id) => {
     fetch('/api/book/' + id)
       .then(res => res.json())
       .then(data => {
-        if (data.cover.search(/agent/i) === -1) {
-          data.cover = 'http://api.zhuishushenqi.com' + data.cover;
-        }
-        else{
-          data.cover = data.cover.replace(/\/agent\//, '');
-        }
-        if (Array.from(String(data.wordCount)).length > 4) {
-          let arr = Array.from(String(data.wordCount));
-          arr.length -= 4;
-          data.wordCount = arr.join('') + '万';
-        }
-        let time = new Date(new Date() - new Date(data.updated)).getTime();
-        let min = time / (1000 * 60);
-        let hour = min / 60;
-        let day = hour / 24;
-        let month = day / 30;
-        let year = month / 12;
-        if (min < 60) {
-          data.updated = Math.floor(min) + '分钟';
-        }
-        else if (hour < 24) {
-          data.updated = Math.floor(hour) + '小时';
-        }
-        else if (day < 30) {
-          data.updated = Math.floor(day) + '天';
-        }
-        else if (month < 12) {
-          data.updated = Math.floor(month) + '月';
-        }
-        else {
-          data.updated = Math.floor(year) + '年';
-        }
-        data.wordCount += '字';
+        data.cover = url2Real(data.cover);
+        data.wordCount = wordCount2Str(data.wordCount);
+        data.updated = time2Str(data.updated);
         return data;
       })
       .then(data => dispatch(receiveBookItem(data)))
@@ -103,8 +75,26 @@ export const deleteBook = (data) => {
   }
 }
 
-//添加书籍
+//为书籍请求章节列表 - 书源信息
 export const addBook = (data) => {
+  let dataIntroduce = data;
+  return dispatch =>{
+    fetch('/api/toc?view=summary&book=' + data._id)
+      .then(res => res.json())
+      .then(data => fetch('/api/toc/' + data[0]._id + '?view=chapters')) //默认取第一个书源
+      .then(res => res.json())
+      .then(data => {
+        dataIntroduce.list = data;
+        return dispatch(addBookInfo(dataIntroduce))
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+}
+ 
+// 添加书籍
+export const addBookInfo = (data) => {
   return {
     type: ADD_LIST,
     data
@@ -116,5 +106,69 @@ export const addBook = (data) => {
 export const getBook = () => {
   return {
     type: GET_LIST
+  }
+}
+
+//获取书源
+export const receiveBookSource = (data) => {
+  type: GET_BOOK_SOURCE,
+  data
+}
+
+//请求-书源
+export const getBookSource = (id) => {
+  return dispatch => {
+    fetch('/api/toc?view=summary&book=' + id)
+      .then(res => res.json())
+      .then(data => {
+        data.unshift(); //删除已加密的优质书源
+        return data;
+      })
+      .then(data => dispatch(receiveBookSource(data)))
+      .catch(error => {
+        console.log(error);
+      })
+  }
+}
+
+
+//获取-书籍章节内容
+export const receiveChapterContent = (data) => {
+  return {
+    type: GET_CHAPTER_CONTENT,
+    data
+  }
+}
+
+//请求 - 章节内容
+export const getChapterContent = (link) => {
+  return dispatch => {
+    fetch('/chapter/' +  encodeURI(link) + '?k=2124b73d7e2e1945&t=1468223717')
+      .then(res => res.json())
+      .then(data => dispatch(receiveChapterContent(data)))
+      .catch(error => {
+        console.log(error);
+      })
+  }
+}
+
+
+//获取 - 书籍章节列表
+export const receiveChapterList = (data) => {
+  return {
+    type: GET_CHAPTER_LIST,
+    data
+  }
+}
+
+//请求 - 章节列表
+export const getChapterList = (id) => {
+  return dispatch => {
+    fetch('/api/toc/' +  id + '?view=chapters')
+      .then(res => res.json())
+      .then(data => dispatch(receiveChapterList(data)))
+      .catch(error => {
+        console.log(error);
+      })
   }
 }
