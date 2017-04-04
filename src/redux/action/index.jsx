@@ -84,6 +84,7 @@ export const addBook = (data) => {
       .then(data => fetch('/api/toc/' + data[0]._id + '?view=chapters')) //默认取第一个书源
       .then(res => res.json())
       .then(data => {
+        data.readIndex = 0
         dataIntroduce.list = data;
         return dispatch(addBookInfo(dataIntroduce))
       })

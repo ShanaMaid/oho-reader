@@ -66,7 +66,7 @@ class AppComponent extends React.Component {
            
           >
             {
-              this.state.bookList.map((item, index) => <Link to={'/read/' + index + '/0'} key={index}><BookItem data={item} deleteBook={this.props.deleteBook} key={index} /></Link>)
+              this.state.bookList.map((item, index) => <Link to={'/read/' + index} key={index}><BookItem data={item} deleteBook={this.props.deleteBook} key={index} /></Link>)
             }
           </ReactPullToRefresh>
           </Content>
