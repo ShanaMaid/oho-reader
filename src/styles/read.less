@@ -1,4 +1,87 @@
 :local {
+  .header{
+    background: rgb(25,25,25);
+    padding:0px 10px;
+    position: fixed;
+    width: 100vw;
+    top: 0px;
+  }
+  
+  .head-font-base{
+    font-size: 0.95rem;
+    color: white;
+    opacity: 0.6;
+    float: right;
+  }
+
+  .origin{
+    .head-font-base;
+    margin-right: 20px;
+  }
+
+  .footer{
+    background: rgb(25,25,25);
+    padding:10px 20px;
+    position: fixed;
+    width: 100vw;
+    bottom: 0px;
+    display: flex;
+    color: white;
+    text-align: center;
+    justify-content: space-around;
+    i {
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .setting{
+     & > div{
+        width: 100vw;
+        height: 100px;
+        background-color: rgba(25, 25, 25, 0.8);
+        position: absolute;
+        left: 0px;
+        top: -100px;
+        padding: 10px 20px;
+        div{
+          text-align: left;
+          padding: 5px 0px;
+          span{
+            margin-right: 20px;
+          }
+        }
+
+        .font{
+          font-size: 1.2rem;
+        }
+
+        .color{
+          i{
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border-radius: 100%;
+            margin-right: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  .icon-base{
+    font-size: 1.6rem;
+    color:white;
+    display: inline-block;
+    line-height: 64px;
+    height: inherit;
+  }
+
+  .pre{
+    .icon-base;
+    padding-right: 10px;
+    float: left;
+  }
+
   .box{
     padding: 0px 20px;
     padding-bottom: 100px;

@@ -21,7 +21,7 @@ class BookIntroduce extends React.Component{
       top: 500,
       duration: 2,
     });
-    this.props.getBookIntroduce(this.props.match.params.id);
+    this.props.getBookItem(this.props.match.params.id);
     this.addBook = () => {
       this.props.addBook(this.data);
       message.info('《' + this.data.title + '》加入书架');

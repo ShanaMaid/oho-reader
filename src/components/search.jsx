@@ -22,7 +22,7 @@ class Search extends React.Component{
         return
       }
       this.setState({loading: true})
-      this.props.search(value)
+      this.props.getBookList(value)
     }
 
     this.loading = true
