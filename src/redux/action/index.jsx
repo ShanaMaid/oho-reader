@@ -3,13 +3,16 @@ import {
   time2Str,
   url2Real,
   wordCount2Str
-} from '../../method/index.js'
+} from '../../method/index.js';
+import storejs from 'store/dist/store.legacy'
 
+var _ = require('underscore');
 
 export const GET_BOOK_LIST = 'GET_BOOKLIST';
 export const GET_BOOK_ITEM = 'GET_BOOKITEM';
 export const ADD_LIST = 'ADD_LIST';
 export const REMOVE_LIST = 'REMOVE_LIST';
+export const REFRESH_LIST = ' REFRESH_LIST';
 export const GET_LIST = 'GET_LIST';
 export const GET_BOOK_SOURCE = 'GET_BOOK_SOURCE';
 export const GET_CHAPTER_CONTENT = 'GET_CHAPTER_CONTENT';
@@ -81,7 +84,10 @@ export const addBook = (data) => {
   return dispatch =>{
     fetch('/api/toc?view=summary&book=' + data._id)
       .then(res => res.json())
-      .then(data => fetch('/api/toc/' + data[0]._id + '?view=chapters')) //默认取第一个书源
+      .then(data => {
+        dataIntroduce.sourceId = data[0]._id;
+        return fetch('/api/toc/' + data[0]._id + '?view=chapters');
+      }) 
       .then(res => res.json())
       .then(data => {
         data.readIndex = 0
@@ -107,6 +113,62 @@ export const addBookInfo = (data) => {
 export const getBook = () => {
   return {
     type: GET_LIST
+  }
+}
+
+
+//刷新书籍列表
+export const receiveReresh = (data) => {
+  return {
+    type :REFRESH_LIST,
+    data
+  }
+}
+
+//刷新书籍列表
+export const refreshBook = () => {
+  let localBookList =  storejs.get('bookList') || [];
+  let bookIdArr = []
+  let bookSourceIdArr = [];
+  return dispatch => {
+    for(let item of localBookList) {
+      bookIdArr.push(item._id);
+      bookSourceIdArr.push(item.sourceId);
+    }
+
+    let introduce = bookIdArr.map((item, index) => {
+      return fetch('/api/book/' + item)
+      .then(res => res.json())
+      .then(data => {
+        data.cover = url2Real(data.cover);
+        data.wordCount = wordCount2Str(data.wordCount);
+        data.updated = time2Str(data.updated);
+        return data;
+      })
+      .then(data => {
+        _.mapObject(data, (val, key) => {
+          localBookList[index][key] = val;
+        })
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    });
+
+    let list = bookSourceIdArr.map((item, index) => {
+      return fetch('/api/toc/' + item + '?view=chapters')
+      .then(res => res.json())
+      .then(data => {
+        localBookList[index].list = data;
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    });
+
+    Promise.all([...introduce, ...list]).then((posts) => {
+      dispatch(receiveReresh(localBookList));
+    })
   }
 }
 

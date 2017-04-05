@@ -5,6 +5,7 @@ import BookItem from './bookItem'
 import styles from '../styles/main.less'
 import template from './template'
 import ReactPullToRefresh from 'react-pull-to-refresh'
+import 'whatwg-fetch';
 
 let menuPng = require('../images/menu.png');
 
@@ -14,7 +15,8 @@ class AppComponent extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      bookList: this.props.bookList.list
+      bookList: this.props.bookList.list,
+      refresh: true
     }
     this.menu = (
       <Menu>
@@ -29,20 +31,24 @@ class AppComponent extends React.Component {
         </Menu.Item>
       </Menu>
     )
+
+    this.handleRefresh = (resolve, reject) => {
+      resolve();
+      this.setState({refresh: true});
+      this.props.refreshBook();
+    }
+
   }
  
+  componentWillMount() {
+    this.props.refreshBook();
+  }
 
   componentWillReceiveProps(nextProps){
-    this.setState({bookList: nextProps.bookList.list})
+    this.setState({bookList: nextProps.bookList.list, refresh: false})
   }
 
-  handleRefresh(resolve, reject) {
-  // do some async code here
-      setTimeout(resolve,2000);
-      // console.log(1111);
-      // resolve();
-  }
-
+  
   render() {
     return (
       <div className="page" ref="main">
@@ -60,10 +66,9 @@ class AppComponent extends React.Component {
           </Header>
           
           <Content className={styles.content}>
+          { this.state.refresh ? (<Spin/>) : ''}
           <ReactPullToRefresh
             onRefresh={this.handleRefresh}
-            icon={(<Spin/>)}
-           
           >
             {
               this.state.bookList.map((item, index) => <Link to={'/read/' + index} key={index}><BookItem data={item} deleteBook={this.props.deleteBook} key={index} /></Link>)
