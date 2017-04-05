@@ -29,7 +29,7 @@ export const getBookList = (name) => {
     fetch('/api/book/fuzzy-search?query=' + name + '&start=0')
       .then(res => res.json())
       .then(data => {
-        data.books.map((item, index, arr) => { item.cover = url2Real(item.cover)})
+        data.books.map((item) => { item.cover = url2Real(item.cover)})
         return data;
       })
       .then(data => dispatch(receiveBookList(data, name)))

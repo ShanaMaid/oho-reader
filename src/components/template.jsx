@@ -14,7 +14,10 @@ const Main = (component) => {
     return {
       fetchBookList,
       fetchBookItem,
-      bookList
+      bookList,
+      bookSource,
+      chapterList,
+      chapterContent
     }
   }
 

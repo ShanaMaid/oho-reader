@@ -7,10 +7,11 @@ import 'whatwg-fetch';
 import storejs from 'store/dist/store.legacy';
 
 const { Header, Footer } = Layout;
-
+var _ = require('underscore')
 class Read extends React.Component{
   constructor(props) {
     super(props);
+    this.flag = true; //标记第一次进入， 判断是否读取上一次阅读的scrollTop
     this.pos = this.props.match.params.id;
     this.index = storejs.get('bookList')[this.pos].list.readIndex || 0;
     this.readSetting = storejs.get('readSetting') || {fontSize: '12', backgroundColor: 'rgb(196, 196 ,196)'};
@@ -50,8 +51,14 @@ class Read extends React.Component{
       .catch(error => message.info(error))
     }
 
-    this.nextChapter = () => this.getChapter(++this.index);
-    this.preChapter = () => this.getChapter(--this.index);
+    this.nextChapter = (e) => {
+      e.stopPropagation();
+      this.getChapter(++this.index);
+    }
+    this.preChapter = (e) => {
+      e.stopPropagation();
+      this.getChapter(--this.index);
+    }
 
     this.shwoSetting = () => {
       this.setState({show: !this.state.show});
@@ -78,15 +85,30 @@ class Read extends React.Component{
       storejs.set('readSetting', this.readSetting);
     }
 
+    this.readScroll = () => {
+      let bookList = storejs.get('bookList');
+      bookList[this.pos].readScroll = this.refs.box.scrollTop;
+      storejs.set('bookList', bookList);
+    }
+
   }
 
   componentWillMount() {
     this.getChapter(this.index);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.flag) { //加载上次阅读进度
+      let bookList = storejs.get('bookList');
+      this.refs.box.scrollTop = _.has(bookList[this.pos], 'readScroll') ? bookList[this.pos].readScroll : 0;
+      this.flag = false;
+    }
+  }
+
+
   render() {
     return (
-      <Spin className='loading' spinning={this.state.loading} tip="书籍搜索中...">
+      <Spin className='loading' spinning={this.state.loading} tip="章节内容加载中">
         <Layout >
           {
             this.state.show ? (() => {
@@ -98,12 +120,12 @@ class Read extends React.Component{
               )
             })() : ''
           }
-          <div className={styles.box} style={this.state.readSetting} onClick={this.shwoSetting}>
+          <div ref='box' className={styles.box} style={this.state.readSetting} onClick={this.shwoSetting} onScroll={this.readScroll}>
           {this.state.loading ? '' : (()=>{
             return (
               <div>
                 <h1>{this.state.chapter.title}</h1>
-                <pre >{this.state.chapter.cpContent}</pre>
+                <pre >{ _.has(this.state.chapter, 'cpContent') ? this.state.chapter.cpContent : this.state.chapter.body}</pre>
                 <h1 className={styles.control}>
                   <span onClick={this.preChapter}>上一章</span>
                   <span onClick={this.nextChapter}>下一章</span>

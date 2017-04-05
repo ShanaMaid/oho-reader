@@ -68,7 +68,6 @@ export const bookSource = (state, action) => {
   switch(action.type){
     case GET_BOOK_SOURCE:
       return action.data;
-      break;
     default:
       return [];  
   }
