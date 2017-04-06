@@ -6,7 +6,6 @@ import {
 } from '../../method/index.js';
 import storejs from 'store/dist/store.legacy'
 
-var _ = require('underscore');
 
 export const GET_BOOK_LIST = 'GET_BOOKLIST';
 export const GET_BOOK_ITEM = 'GET_BOOKITEM';
@@ -146,9 +145,9 @@ export const refreshBook = () => {
         return data;
       })
       .then(data => {
-        _.mapObject(data, (val, key) => {
-          localBookList[index][key] = val;
-        })
+        for (let indexName in data) {
+          localBookList[index][indexName] = data[indexName]
+        }
       })
       .catch(error => {
         console.log(error);
@@ -167,6 +166,7 @@ export const refreshBook = () => {
     });
 
     Promise.all([...introduce, ...list]).then((posts) => {
+
       dispatch(receiveReresh(localBookList));
     })
   }

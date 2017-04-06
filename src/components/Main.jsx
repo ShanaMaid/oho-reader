@@ -8,6 +8,7 @@ import ReactPullToRefresh from 'react-pull-to-refresh'
 import 'whatwg-fetch';
 
 let menuPng = require('../images/menu.png');
+let nullJpg = require('../images/null.jpg');
 
 const { Header, Content } = Layout
 
@@ -16,7 +17,7 @@ class AppComponent extends React.Component {
     super(props)
     this.state = {
       bookList: this.props.bookList.list,
-      refresh: true
+      refresh: false
     }
     this.menu = (
       <Menu>
@@ -41,7 +42,6 @@ class AppComponent extends React.Component {
   }
  
   componentWillMount() {
-    this.props.refreshBook();
   }
 
   componentWillReceiveProps(nextProps){
@@ -71,7 +71,13 @@ class AppComponent extends React.Component {
             onRefresh={this.handleRefresh}
           >
             {
-              this.state.bookList.map((item, index) => <Link to={'/read/' + index} key={index}><BookItem data={item} deleteBook={this.props.deleteBook} key={index} /></Link>)
+              this.state.bookList.length === 0 ? 
+              (
+                <div className={styles.null}>
+                  书架空空的！快去添加点书吧！
+                </div>
+              ) 
+              : this.state.bookList.map((item, index) => <Link to={'/read/' + index} key={index}><BookItem data={item} deleteBook={this.props.deleteBook} key={index} /></Link>)
             }
           </ReactPullToRefresh>
           </Content>
