@@ -11,7 +11,6 @@ class BookItem extends React.Component{
   constructor(props) {
     super(props);
     this.showConfirm = () => {
-    let that= this;
     confirm({
       title: '删除本书',
       content: '确认删除本书《' + this.props.data.title + '》吗？' ,

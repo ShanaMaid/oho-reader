@@ -10,6 +10,7 @@ const { Header, Content } = Layout
 class Search extends React.Component{
   constructor(props) {
     super(props)
+    this.flag = true
     this.state = {
       searchValue: this.props.fetchBookList.name,
       bookList: this.props.fetchBookList.books,
@@ -25,10 +26,9 @@ class Search extends React.Component{
       this.props.getBookList(value);
     }
 
-    this.loading = true
   }
 
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     console.log(nextProps)
     this.setState({bookList: nextProps.fetchBookList.books, searchValue: nextProps.fetchBookList.name, loading: false})
   }
@@ -57,7 +57,7 @@ class Search extends React.Component{
           <Spin className='loading' spinning={this.state.loading} tip="书籍搜索中...">
           <Content className={styles.content}>
             {
-              this.state.bookList.length != 0 ?
+              this.state.bookList.length !== 0 ?
               this.state.bookList.map((item, index) => <ResultBookItem data={item} key={index}/>)
               : '没有找到搜索结果'
             }

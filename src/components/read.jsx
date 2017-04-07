@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
-import {Layout, Spin, message, Icon} from 'antd';
+import {Layout, Spin, message, Icon, Modal} from 'antd';
 import styles from '../styles/read.less';
 import template from './template';
 import 'whatwg-fetch';
@@ -12,14 +12,16 @@ class Read extends React.Component{
   constructor(props) {
     super(props);
     this.flag = true; //标记第一次进入， 判断是否读取上一次阅读的scrollTop
-    this.pos = this.props.match.params.id;
-    this.index = storejs.get('bookList')[this.pos].list.readIndex || 0;
+    this.pos = this.props.match.params.id; //书籍在列表的序号
+    this.index = storejs.get('bookList')[this.pos].list.readIndex || 0; //章节号
+    this.chapterList = storejs.get('bookList')[this.pos].list.chapters;
     this.readSetting = storejs.get('readSetting') || {fontSize: '12', backgroundColor: 'rgb(196, 196 ,196)'};
     this.state = {
       loading: true,
       chapter: '',
       show: false,
-      readSetting: this.readSetting
+      readSetting: this.readSetting,
+      modal2Visible: false,
     }
 
     this.getChapter = (index) => {
@@ -35,7 +37,6 @@ class Read extends React.Component{
         return;
       }
       this.setState({loading: true});
-      document.getElementsByTagName('body')[0].scrollTop = 0;
       fetch('/chapter/' + chapters[index].link + '?k=2124b73d7e2e1945&t=1468223717')
       .then(res => res.json())
       .then( data => {
@@ -46,7 +47,7 @@ class Read extends React.Component{
         let bookList = storejs.get('bookList');
         bookList[this.pos].list.readIndex = index;
         storejs.set('bookList', bookList);
-        return this.setState({loading: false, chapter: data.chapter})
+        this.setState({loading: false, chapter: data.chapter})
       })
       .catch(error => message.info(error))
     }
@@ -60,7 +61,14 @@ class Read extends React.Component{
       this.getChapter(--this.index);
     }
 
-    this.shwoSetting = () => {
+    this.targetChapter = (e) => {
+      e.stopPropagation();
+      this.index = e.target.id
+      this.getChapter(this.index);
+      this.setState({modal2Visible: false});
+    }
+
+    this.shwoSetting = (e) => {
       this.setState({show: !this.state.show});
     }
 
@@ -93,6 +101,10 @@ class Read extends React.Component{
 
   }
 
+  setModal2Visible(modal2Visible) {
+    this.setState({ modal2Visible });
+  }
+
   componentWillMount() {
     this.getChapter(this.index);
   }
@@ -103,6 +115,13 @@ class Read extends React.Component{
       this.refs.box.scrollTop = _.has(bookList[this.pos], 'readScroll') ? bookList[this.pos].readScroll : 0;
       this.flag = false;
     }
+    else if(prevState.loading !== this.state.loading){
+      this.refs.box.scrollTop = 0;
+    }
+    let list =  document.querySelector('.chapterList .ant-modal-body');
+    if (list !== null) {
+      list.scrollTop = 25 * (this.index - 5);
+    }
   }
 
 
@@ -110,6 +129,17 @@ class Read extends React.Component{
     return (
       <Spin className='loading' spinning={this.state.loading} tip="章节内容加载中">
         <Layout >
+          <Modal
+            className="chapterList"
+            title="Vertically centered modal dialog"
+            visible={this.state.modal2Visible}
+            onOk={() => this.setModal2Visible(false)}
+            onCancel={() => this.setModal2Visible(false)}
+          >
+            {
+              this.chapterList.map((item,index) => (<p id={index} className={parseInt(this.index, 10) == index ?  'choosed' : ''} onClick={this.targetChapter} key={index}>{item.title}</p>))
+            }
+          </Modal>
           {
             this.state.show ? (() => {
               return (
@@ -153,7 +183,7 @@ class Read extends React.Component{
                     </div>
                   </div>
                   <div><Icon type="download" /><br/>下载</div>
-                  <div><Icon type="bars" /><br/>目录</div>
+                  <div onClick={() => this.setModal2Visible(true)}><Icon type="bars" /><br/>目录</div>
                 </Footer>
               )
             })() : ''

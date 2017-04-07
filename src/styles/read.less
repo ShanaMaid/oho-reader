@@ -102,3 +102,30 @@
     }
   }
 }
+
+:global {
+  .chapterList {
+    .ant-modal-footer,
+    .ant-modal-header,
+    .ant-modal-close{
+      display: none;
+    }
+
+    .ant-modal-body{
+      height: 60vh;
+      overflow: scroll;
+    }
+
+    p{
+      border-bottom: 1px solid rgb(225,225,226);
+      font-size: 1.0rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .choosed{
+      color: red;
+    }
+  }
+}
