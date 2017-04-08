@@ -120,7 +120,7 @@ class Read extends React.Component{
     }
     let list =  document.querySelector('.chapterList .ant-modal-body');
     if (list !== null) {
-      list.scrollTop = 25 * (this.index - 5);
+      list.scrollTop = 45 * (this.index - 3);
     }
   }
 

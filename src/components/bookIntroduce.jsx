@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import template from './template';
 import styles from '../styles/bookIntroduce.less';
 import randomcolor from 'randomcolor';
+import {history} from 'react-router';
 
 
 const { Header, Content } = Layout
@@ -12,15 +13,17 @@ let errorLoading = require('../images/error.jpg')
 class BookIntroduce extends React.Component{
   constructor(props) {
     super(props);
-    this.data = {}
+    this.data = {};
     this.state = {
       loading: true,
       save: false
-    }
+    };
     message.config({
       top: 500,
       duration: 2,
     });
+
+    this.flag = false; //是否进入阅读模式
     this.props.getBookItem(this.props.match.params.id);
     this.addBook = () => {
       this.props.addBook(this.data);
@@ -30,6 +33,11 @@ class BookIntroduce extends React.Component{
     this.deleteBook = () => {
       this.props.deleteBook(this.data);
       message.info('《' + this.data.title + '》从书架移除');
+    }
+
+    this.beiginRead = () => {
+      this.addBook();
+      this.flag = true;
     }
   }
 
@@ -41,6 +49,17 @@ class BookIntroduce extends React.Component{
     console.log(nextProps)
     this.data = nextProps.fetchBookItem;
     this.setState({loading: false, save: nextProps.bookList.id.has(nextProps.fetchBookItem._id)});
+    if (this.flag) {
+      let list = nextProps.bookList.list
+      for (let index in list) {
+        if (list[index]._id === nextProps.fetchBookItem._id) {
+          let index = nextProps.bookList.list.length - 1;
+          this.props.history.push({pathname: '/read/' + index});
+          this.flag = false;
+          break;
+        }
+      }
+    }
   }
 
   handleImageErrored(e){
@@ -78,7 +97,7 @@ class BookIntroduce extends React.Component{
                         (<Button icon='minus' size='large' className={styles.cancel} onClick={this.deleteBook}>不追了</Button>) :
                         (<Button icon='plus' size='large' onClick={this.addBook}>追更新</Button>)
                       }
-                      <Button icon='search' size='large'>开始阅读</Button>
+                      <Button icon='search' size='large' onClick={this.beiginRead}>开始阅读</Button>
                     </div>
                     <div className={styles.number}>
                       <p><span>追书人数</span><br/>{this.data.latelyFollower}</p>
