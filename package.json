@@ -74,6 +74,7 @@
     "normalize.css": "^4.0.0",
     "randomcolor": "^0.4.4",
     "react": "^15.0.0",
+    "react-copy-to-clipboard": "^4.2.3",
     "react-dom": "^15.0.0",
     "react-overdrive": "0.0.4",
     "react-pull-to-refresh": "^1.0.6",

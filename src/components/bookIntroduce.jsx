@@ -1,10 +1,10 @@
 import React from 'react';
-import {Layout, Icon, Spin, Button, Tag, message} from 'antd';
+import {Layout, Icon, Spin, Button, Tag, message, Modal} from 'antd';
 import { Link } from 'react-router-dom';
 import template from './template';
 import styles from '../styles/bookIntroduce.less';
 import randomcolor from 'randomcolor';
-import {history} from 'react-router';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 
 const { Header, Content } = Layout
@@ -14,6 +14,7 @@ class BookIntroduce extends React.Component{
   constructor(props) {
     super(props);
     this.data = {};
+    this.share = '';
     this.state = {
       loading: true,
       save: false
@@ -39,6 +40,13 @@ class BookIntroduce extends React.Component{
       this.addBook();
       this.flag = true;
     }
+
+    this.shareSuccess =  () => {
+      Modal.success({
+        title: '链接已复制到你的剪贴板',
+        content: this.share,
+      });
+    }
   }
 
   componentWillMount() {
@@ -48,6 +56,7 @@ class BookIntroduce extends React.Component{
   componentWillReceiveProps(nextProps) {
     console.log(nextProps)
     this.data = nextProps.fetchBookItem;
+    this.share = `我在哦豁阅读器看《${this.data.title}》，绿色无广告，你也一起来呗！地址是${window.location.href}`;
     this.setState({loading: false, save: nextProps.bookList.id.has(nextProps.fetchBookItem._id)});
     if (this.flag) {
       let list = nextProps.bookList.list
@@ -74,7 +83,10 @@ class BookIntroduce extends React.Component{
           <Header className={styles.header}>
             <Link to="/search"><Icon type="arrow-left" className={styles.pre}/></Link>
             <span className={styles.title}>书籍详情</span>
-            <span className={styles.share}>分享</span>
+            <CopyToClipboard text={this.share}
+              onCopy = {this.shareSuccess}>
+              <span className={styles.share}>分享</span>
+            </CopyToClipboard>
             <span className={styles.download}>缓存全部</span>
           </Header>
           <Spin className='loading' spinning={this.state.loading} tip='书籍详情加载中...'>
