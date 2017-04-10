@@ -21,7 +21,8 @@ class Read extends React.Component{
       chapter: '',
       show: false,
       readSetting: this.readSetting,
-      modal2Visible: false,
+      chapterListShow: false,
+      readSettingShow: false
     }
 
     this.getChapter = (index) => {
@@ -37,7 +38,7 @@ class Read extends React.Component{
         return;
       }
       this.setState({loading: true});
-      fetch('/chapter/' + encodeURIComponent(chapters[index].link) + '?k=2124b73d7e2e1945&t=1468223717')
+      fetch(`/chapter/${encodeURIComponent(chapters[index].link)}?k=2124b73d7e2e1945&t=1468223717`)
       .then(res => res.json())
       .then( data => {
         if (!data.ok) {
@@ -65,10 +66,10 @@ class Read extends React.Component{
       e.stopPropagation();
       this.index = e.target.id
       this.getChapter(this.index);
-      this.setState({modal2Visible: false});
+      this.setState({chapterListShow: false});
     }
 
-    this.shwoSetting = (e) => {
+    this.shwoSetting = () => {
       this.setState({show: !this.state.show});
     }
 
@@ -99,11 +100,29 @@ class Read extends React.Component{
       storejs.set('bookList', bookList);
     }
 
+    this.showChapterList = (chapterListShow) => {
+      this.setState({ chapterListShow });
+    }
+
+    this.downladBook = () => {
+      Modal.info({
+        title: '提示',
+        content: (
+          <div>
+            <p>服务器配置与带宽有限，目前不支持缓存功能！请在线阅读！谢谢合作！</p>
+          </div>
+        ),
+        onOk() {},
+      });
+    }
+
+    this.readSettingShowControl = (e) => {
+      e.stopPropagation();
+      let value = !this.state.readSettingShow;
+      this.setState({readSettingShow: value});
+    }
   }
 
-  setModal2Visible(modal2Visible) {
-    this.setState({ modal2Visible });
-  }
 
   componentWillMount() {
     this.getChapter(this.index);
@@ -132,9 +151,9 @@ class Read extends React.Component{
           <Modal
             className="chapterList"
             title="Vertically centered modal dialog"
-            visible={this.state.modal2Visible}
-            onOk={() => this.setModal2Visible(false)}
-            onCancel={() => this.setModal2Visible(false)}
+            visible={this.state.chapterListShow}
+            onOk={() => this.showChapterList(false)}
+            onCancel={() => this.showChapterList(false)}
           >
             {
               this.chapterList.map((item,index) => (<p id={index} className={parseInt(this.index, 10) == index ?  'choosed' : ''} onClick={this.targetChapter} key={index}>{item.title}</p>))
@@ -168,22 +187,31 @@ class Read extends React.Component{
             this.state.show ?  (() => {
               return (
                 <Footer className={styles.footer}>
-                  <div className={styles.setting}>
+                  <div 
+                    className={styles.setting} 
+                    tabIndex="100" 
+                    onClick={this.readSettingShowControl} 
+                    onBlur={this.readSettingShowControl}>
                     <Icon type="setting" /><br/>设置
-                    <div>
-                      <div className={styles.font}>
-                        <span onClick={this.fontDown}>Aa -</span>
-                        <span onClick={this.fontUp}>Aa +</span>
-                      </div>
-                      <div className={styles.color}>
-                        <i onClick={this.changeBackgroudnColor} style={{backgroundColor: 'rgb(196, 196 ,196)'}}></i>
-                        <i onClick={this.changeBackgroudnColor} style={{backgroundColor: 'rgb(162, 157, 137)'}}></i>
-                        <i onClick={this.changeBackgroudnColor} style={{backgroundColor: 'rgb(173, 200, 169)'}}></i>
-                      </div>
-                    </div>
+                    {
+                      this.state.readSettingShow ?
+                      (
+                        <div onClick={(e) => e.stopPropagation()}>
+                          <div className={styles.font}>
+                            <span onClick={this.fontDown}>Aa -</span>
+                            <span onClick={this.fontUp}>Aa +</span>
+                          </div>
+                          <div className={styles.color}>
+                            <i onClick={this.changeBackgroudnColor} style={{backgroundColor: 'rgb(196, 196 ,196)'}}></i>
+                            <i onClick={this.changeBackgroudnColor} style={{backgroundColor: 'rgb(162, 157, 137)'}}></i>
+                            <i onClick={this.changeBackgroudnColor} style={{backgroundColor: 'rgb(173, 200, 169)'}}></i>
+                          </div>
+                        </div>
+                      ) : ''
+                    }
                   </div>
-                  <div><Icon type="download" /><br/>下载</div>
-                  <div onClick={() => this.setModal2Visible(true)}><Icon type="bars" /><br/>目录</div>
+                  <div><Icon type="download"  onClick={this.downladBook}/><br/>下载</div>
+                  <div onClick={() => this.showChapterList(true)}><Icon type="bars" /><br/>目录</div>
                 </Footer>
               )
             })() : ''

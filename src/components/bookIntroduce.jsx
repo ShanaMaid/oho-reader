@@ -21,19 +21,19 @@ class BookIntroduce extends React.Component{
     };
     message.config({
       top: 500,
-      duration: 2,
+      duration: 2
     });
 
     this.flag = false; //是否进入阅读模式
     this.props.getBookItem(this.props.match.params.id);
     this.addBook = () => {
       this.props.addBook(this.data);
-      message.info('《' + this.data.title + '》加入书架');
+      message.info(`《${this.data.title}》加入书架`);
     }
 
     this.deleteBook = () => {
       this.props.deleteBook(this.data);
-      message.info('《' + this.data.title + '》从书架移除');
+      message.info(`《${this.data.title}》从书架移除`);
     }
 
     this.beiginRead = () => {
@@ -44,7 +44,7 @@ class BookIntroduce extends React.Component{
     this.shareSuccess =  () => {
       Modal.success({
         title: '链接已复制到你的剪贴板',
-        content: this.share,
+        content: this.share
       });
     }
   }
@@ -54,9 +54,8 @@ class BookIntroduce extends React.Component{
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
     this.data = nextProps.fetchBookItem;
-    this.share = `我在哦豁阅读器看《${this.data.title}》，绿色无广告，你也一起来呗！地址是${window.location.href}`;
+    this.share = `我在哦豁阅读器看《${this.data.title}》，绿色无广告，你也一起来呗！地址是${window.location.href}，移动端请手动复制这条信息。`;
     this.setState({loading: false, save: nextProps.bookList.id.has(nextProps.fetchBookItem._id)});
     if (this.flag) {
       let list = nextProps.bookList.list
@@ -87,7 +86,6 @@ class BookIntroduce extends React.Component{
               onCopy = {this.shareSuccess}>
               <span className={styles.share}>分享</span>
             </CopyToClipboard>
-            <span className={styles.download}>缓存全部</span>
           </Header>
           <Spin className='loading' spinning={this.state.loading} tip='书籍详情加载中...'>
           <Content className={styles.content}>

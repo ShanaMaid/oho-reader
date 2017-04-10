@@ -33,7 +33,7 @@
   }
 
   .searchInput{
-    width: calc(~'100% - 3.2rem - 40px');
+    
     background-color: rgba(255, 255, 255, 0);
     margin-left: 10px;
     outline: none;
@@ -44,6 +44,52 @@
       border: none;
       outline: none;
       box-shadow: none;
+    }
+  }
+
+  .noResult{
+    height: 100%;
+    line-height: calc(~'100vh - 64px');
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+
+  .tagBox{
+    padding: 20px 10px;
+
+    h1{
+      font-size: 1.0rem;
+    }
+
+    .tags{
+      padding: 10px 15px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      align-content: flex-start;
+      .tag{
+        opacity: 0.6;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
+      }
+    }
+
+    .clear{
+      margin-top: 40px;
+      text-align: center;
+      font-size: 1.0rem;
+    }
+  }
+  
+}
+
+:global{
+  .ant-input-affix-wrapper{
+    width: calc(~'100% - 3.2rem - 40px');
+    .anticon-close-circle{
+      color: white;
+      font-size: 1.1rem;
     }
   }
 }

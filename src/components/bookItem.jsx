@@ -13,7 +13,7 @@ class BookItem extends React.Component{
     this.showConfirm = () => {
     confirm({
       title: '删除本书',
-      content: '确认删除本书《' + this.props.data.title + '》吗？' ,
+      content: `确认删除本书《${this.props.data.title}》吗？` ,
       onOk: () => {
         this.props.deleteBook(this.props.data);
       },

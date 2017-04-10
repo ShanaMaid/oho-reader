@@ -1,8 +1,7 @@
 import React from 'react';
-import {Layout, Icon, Button, Spin} from 'antd';
+import {Layout, Icon, Spin} from 'antd';
 import { Link } from 'react-router-dom';
 import styles from '../styles/changeOrigin.less';
-import template from './template';
 import storejs from 'store/dist/store.legacy';
 import 'whatwg-fetch';
 import {time2Str} from '../method/index';
@@ -19,7 +18,7 @@ class ChangeOrigin extends React.Component{
     this.pos = this.props.match.params.id; //书籍在列表的序号
     this.bookList = storejs.get('bookList')[this.pos];
     this.changeOrigin = (id) => {
-      fetch('/api/toc/' + id + '?view=chapters')
+      fetch(`/api/toc/${id}?view=chapters`)
       .then(res => res.json())
       .then(data => {
         let bookList = storejs.get('bookList');

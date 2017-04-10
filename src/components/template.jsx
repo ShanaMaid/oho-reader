@@ -6,18 +6,12 @@ const Main = (component) => {
     let {
       fetchBookList,
       fetchBookItem,
-      bookList,
-      bookSource,
-      chapterList,
-      chapterContent
+      bookList
     } = state
     return {
       fetchBookList,
       fetchBookItem,
-      bookList,
-      bookSource,
-      chapterList,
-      chapterContent
+      bookList
     }
   }
 

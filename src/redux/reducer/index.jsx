@@ -1,7 +1,6 @@
-import {GET_BOOK_LIST, GET_BOOK_ITEM, GET_BOOK_SOURCE}  from '../action/index';
+import {GET_BOOK_LIST, GET_BOOK_ITEM}  from '../action/index';
 import {ADD_LIST, REMOVE_LIST, GET_LIST, REFRESH_LIST} from '../action/index';
-import {GET_CHAPTER_CONTENT, GET_CHAPTER_LIST} from '../action/index';
-import storejs from 'store/dist/store.legacy'
+import storejs from 'store/dist/store.legacy';
 
 
 
@@ -10,7 +9,7 @@ export const fetchBookList = (state = {books: [], name: ''}, action={}) => {
   switch (action.type){
     case GET_BOOK_LIST:
       let {
-        data: {books}, 
+        data: {books},
         name
       } = action
       return {books, name};
@@ -67,33 +66,3 @@ export const bookList = (state, action={}) => {
   }
 }
 
-
-//获取书源
-export const bookSource = (state, action) => {
-  switch(action.type){
-    case GET_BOOK_SOURCE:
-      return action.data;
-    default:
-      return [];  
-  }
-}
-
-//章节列表
-export const chapterList = (state, action) => {
-  switch(action.type){
-    case GET_CHAPTER_LIST:
-      return action.data;
-    default:
-      return [];
-  }
-}
-
-//章节内容
-export const chapterContent = (state, action) => {
-  switch(action.type){
-    case GET_CHAPTER_CONTENT:
-      return action.data;
-    default:
-      return {};
-  }
-}

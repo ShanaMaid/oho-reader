@@ -13,7 +13,7 @@ class ResultBookItem extends React.Component{
 
   render() {
     return (
-      <Link to={'/bookIntroduce/' + this.props.data._id}>
+      <Link to={`/bookIntroduce/${this.props.data._id}`}>
       <div className={styles.box}>
         <img src={this.props.data.cover} onError={this.handleImageErrored}/>
         <p>
