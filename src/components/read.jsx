@@ -13,7 +13,7 @@ class Read extends React.Component{
     super(props);
     this.flag = true; //标记第一次进入， 判断是否读取上一次阅读的scrollTop
     this.pos = this.props.match.params.id; //书籍在列表的序号
-    this.index = storejs.get('bookList')[this.pos].list.readIndex || 0; //章节号
+    this.index = storejs.get('bookList')[this.pos].readIndex || 0; //章节号
     this.chapterList = storejs.get('bookList')[this.pos].list.chapters;
     this.readSetting = storejs.get('readSetting') || {fontSize: '12', backgroundColor: 'rgb(196, 196 ,196)'};
     this.state = {
@@ -36,7 +36,6 @@ class Read extends React.Component{
         this.index = chapters.length - 1;
         return;
       }
-      console.log(encodeURIComponent(chapters[index].link));
       this.setState({loading: true});
       fetch('/chapter/' + encodeURIComponent(chapters[index].link) + '?k=2124b73d7e2e1945&t=1468223717')
       .then(res => res.json())
@@ -46,7 +45,7 @@ class Read extends React.Component{
           return this.setState({loading: false});
         }
         let bookList = storejs.get('bookList');
-        bookList[this.pos].list.readIndex = index;
+        bookList[this.pos].readIndex = index;
         storejs.set('bookList', bookList);
         this.setState({loading: false, chapter: data.chapter})
       })
