@@ -84,8 +84,15 @@ export const addBook = (data) => {
     fetch('/api/toc?view=summary&book=' + data._id)
       .then(res => res.json())
       .then(data => {
-        dataIntroduce.sourceId = data[0]._id;
-        return fetch('/api/toc/' + data[0]._id + '?view=chapters');
+        let sourceId = data[1]._id; //0为优质书源，已经被加密
+        for (let item of data) {
+          console.log(item.source)
+          if (item.source === 'shuhaha') {
+            sourceId = item._id;
+          }
+        }
+        dataIntroduce.sourceId = sourceId;
+        return fetch('/api/toc/' + sourceId + '?view=chapters');
       }) 
       .then(res => res.json())
       .then(data => {
@@ -166,7 +173,6 @@ export const refreshBook = () => {
     });
 
     Promise.all([...introduce, ...list]).then((posts) => {
-
       dispatch(receiveReresh(localBookList));
     })
   }

@@ -1,0 +1,46 @@
+:local{
+  .header{
+    background: rgb(198,47,47);
+    padding:0px 20px;
+  }
+
+  .content{
+    background: white;
+    height: calc(~'100vh - 64px');
+    overflow-y: scroll;
+    li{
+      padding: 10px 20px;
+      h1{
+        font-size: 1.1rem;
+        font-weight: bold;
+      }
+      p{
+        color: #b6b6b6;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  .icon-base{
+    font-size: 1.6rem;
+    color:white;
+    display: inline-block;
+    line-height: 64px;
+    height: inherit;
+  }
+
+  .pre{
+    .icon-base;
+    padding-right: 10px;
+    float: left;
+  }
+
+  .title{
+    font-size: 1.1rem;
+    color: white;
+    margin-left: 20px;
+  }
+}

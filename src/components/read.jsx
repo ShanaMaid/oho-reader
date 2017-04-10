@@ -36,8 +36,9 @@ class Read extends React.Component{
         this.index = chapters.length - 1;
         return;
       }
+      console.log(encodeURIComponent(chapters[index].link));
       this.setState({loading: true});
-      fetch('/chapter/' + chapters[index].link + '?k=2124b73d7e2e1945&t=1468223717')
+      fetch('/chapter/' + encodeURIComponent(chapters[index].link) + '?k=2124b73d7e2e1945&t=1468223717')
       .then(res => res.json())
       .then( data => {
         if (!data.ok) {
@@ -145,7 +146,7 @@ class Read extends React.Component{
               return (
                 <Header className={styles.header}>
                   <Link to="/"><Icon type="arrow-left" className={styles.pre}/></Link>
-                  <span className={styles.origin}>换源</span>
+                  <Link to={`/changeOrigin/${this.pos}`}><span className={styles.origin}>换源</span></Link>
                 </Header>
               )
             })() : ''

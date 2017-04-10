@@ -11,6 +11,7 @@ import bookIntroduce from '../components/bookIntroduce'
 import setting from '../components/setting'
 import about from '../components/about'
 import read from '../components/read'
+import changeOrigin from '../components/changeOrigin'
 
 
 
@@ -24,6 +25,7 @@ const RouteConfig = () => (
       <Route path="/bookIntroduce/:id"  component={bookIntroduce} />
       <Route path="/about" exact component={about} />
       <Route path="/read/:id" exact component={read} />
+      <Route path="/changeOrigin/:id" exact component={changeOrigin} />
       <Route component={index} />
     </Switch>
   </Router>
