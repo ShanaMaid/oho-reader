@@ -84,9 +84,8 @@ export const addBook = (data) => {
     fetch(`/api/toc?view=summary&book=${data._id}`)
       .then(res => res.json())
       .then(data => {
-        let sourceId = data[1]._id; //0为优质书源，已经被加密
+        let sourceId = data[0]._id; 
         for (let item of data) {
-          console.log(item.source)
           if (item.source === 'shuhaha') {
             sourceId = item._id;
           }

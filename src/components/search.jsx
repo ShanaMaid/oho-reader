@@ -22,7 +22,7 @@ class Search extends React.Component{
     this.flag = this.state.searchValue.length ? false : true; 
 
     this.tagColorArr = this.state.searchHistory.map(item => randomcolor({luminosity: 'dark'}));
-
+    console.log(this.tagColorArr)
     this.clearHistory = () => {
       let searchHistory = [];
       this.setState({searchHistory});
@@ -33,14 +33,16 @@ class Search extends React.Component{
       this.flag = false;
       value = value === undefined ? this.state.searchValue : value;
       if (new Set(value).has(' ') || value === '') {
-        alert('宝贝儿！别输入空格或者空哦！')
-        return
+        alert('宝贝儿！别输入空格或者空哦！');
+        return;
       };
       //更新搜索历史
       let searchHistory = new Set(this.state.searchHistory);
       searchHistory = Array.from(searchHistory.add(value));
       storejs.set('searchHistory', searchHistory);
 
+      this.tagColorArr.push(randomcolor({luminosity: 'dark'}));
+      
       this.setState({loading: true, searchHistory});
       this.props.getBookList(value);
     }

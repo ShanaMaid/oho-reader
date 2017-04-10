@@ -36,7 +36,6 @@ class ChangeOrigin extends React.Component{
     fetch(`/api/toc?view=summary&book=${this.bookList._id}`)
         .then(res => res.json())
         .then( data => {
-          data.shift(); //删除优质书源，优质书源已被加密
           this.setState({loading: false, data});
         })
         .catch( error => console.log(error));
