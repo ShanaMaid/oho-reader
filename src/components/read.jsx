@@ -48,6 +48,8 @@ class Read extends React.Component{
         let bookList = storejs.get('bookList');
         bookList[this.pos].readIndex = index;
         storejs.set('bookList', bookList);
+        let content = _.has(data.chapter, 'cpContent') ?  data.chapter.cpContent :  data.chapter.body;
+        data.chapter.cpContent =  '   ' + content.replace(/\n/g, "\n   ");
         this.setState({loading: false, chapter: data.chapter})
       })
       .catch(error => message.info(error))
@@ -174,7 +176,7 @@ class Read extends React.Component{
             return (
               <div>
                 <h1>{this.state.chapter.title}</h1>
-                <pre >{ _.has(this.state.chapter, 'cpContent') ? this.state.chapter.cpContent : this.state.chapter.body}</pre>
+                <pre >{this.state.chapter.cpContent}</pre>
                 <h1 className={styles.control}>
                   <span onClick={this.preChapter}>上一章</span>
                   <span onClick={this.nextChapter}>下一章</span>
