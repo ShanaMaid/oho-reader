@@ -26,19 +26,18 @@ class Read extends React.Component{
     }
 
     this.getChapter = (index) => {
-      let chapters = this.props.bookList.list[this.pos].list.chapters;
       if (index < 0) {
         message.info('已经是第一章了！');
         this.index = 0;
         return;
       }
-      else if(index >= chapters.length) {
+      else if(index >= this.chapterList.length) {
         message.info('已经是最新的一章了！');
-        this.index = chapters.length - 1;
+        this.index = this.chapterList.length - 1;
         return;
       }
       this.setState({loading: true});
-      fetch(`/chapter/${encodeURIComponent(chapters[index].link)}?k=2124b73d7e2e1945&t=1468223717`)
+      fetch(`/chapter/${encodeURIComponent(this.chapterList[index].link)}?k=2124b73d7e2e1945&t=1468223717`)
       .then(res => res.json())
       .then( data => {
         if (!data.ok) {
