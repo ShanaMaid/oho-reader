@@ -24,7 +24,7 @@ class Read extends React.Component{
       chapterListShow: false,
       readSettingShow: false
     }
-
+    console.log(storejs.get('bookList'))
     this.getChapter = (index) => {
       if (index < 0) {
         message.info('已经是第一章了！');
@@ -34,7 +34,7 @@ class Read extends React.Component{
       else if(index >= this.chapterList.length) {
         message.info('已经是最新的一章了！');
         this.index = this.chapterList.length - 1;
-        return;
+        index = this.index;
       }
       this.setState({loading: true});
       fetch(`/chapter/${encodeURIComponent(this.chapterList[index].link)}?k=2124b73d7e2e1945&t=1468223717`)
