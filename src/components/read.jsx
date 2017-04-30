@@ -7,7 +7,8 @@ import 'whatwg-fetch';
 import storejs from 'store/dist/store.legacy';
 
 const { Header, Footer } = Layout;
-var _ = require('underscore')
+var _ = require('underscore');
+
 class Read extends React.Component{
   constructor(props) {
     super(props);
@@ -24,7 +25,6 @@ class Read extends React.Component{
       chapterListShow: false,
       readSettingShow: false
     }
-    console.log(storejs.get('bookList'))
     this.getChapter = (index) => {
       if (index < 0) {
         message.info('已经是第一章了！');
@@ -36,7 +36,21 @@ class Read extends React.Component{
         this.index = this.chapterList.length - 1;
         index = this.index;
       }
+
+      
       this.setState({loading: true});
+      let chapters = storejs.get('bookList')[this.pos].list.chapters;
+      if (_.has(chapters[index], 'chapter')) {
+        this.setState({loading: false, chapter: chapters[index].chapter}, () => {
+          this.refs.box.scrollTop = 0;
+        });
+        let bookList = storejs.get('bookList');
+        bookList[this.pos].readIndex = index;
+        storejs.set('bookList', bookList);
+        return;
+      }
+
+      
       fetch(`/chapter/${encodeURIComponent(this.chapterList[index].link)}?k=2124b73d7e2e1945&t=1468223717`)
       .then(res => res.json())
       .then( data => {
@@ -44,11 +58,13 @@ class Read extends React.Component{
           message.info('章节内容丢失！');
           return this.setState({loading: false});
         }
+        let content = _.has(data.chapter, 'cpContent') ?  data.chapter.cpContent :  data.chapter.body;
+        data.chapter.cpContent =  '   ' + content.replace(/\n/g, "\n   ");
+
         let bookList = storejs.get('bookList');
         bookList[this.pos].readIndex = index;
         storejs.set('bookList', bookList);
-        let content = _.has(data.chapter, 'cpContent') ?  data.chapter.cpContent :  data.chapter.body;
-        data.chapter.cpContent =  '   ' + content.replace(/\n/g, "\n   ");
+
         this.setState({loading: false, chapter: data.chapter})
       })
       .catch(error => message.info(error))
@@ -106,14 +122,47 @@ class Read extends React.Component{
     }
 
     this.downladBook = () => {
-      Modal.info({
-        title: '提示',
+      let pos = this.pos;
+      Modal.confirm({
+        title: '缓存',
         content: (
           <div>
-            <p>服务器配置与带宽有限，目前不支持缓存功能！请在线阅读！谢谢合作！</p>
+            <p>是否缓存后100章节？</p>
           </div>
         ),
-        onOk() {},
+        onOk() {
+          let bookList = storejs.get('bookList');
+          let chapters = bookList[pos].list.chapters;
+          let download = (start, end) => {
+            if (start > end || start >= chapters.length) {
+              message.info('缓存完成');
+              return;
+            }
+            if(_.has(chapters[start], 'chapter')) {
+              download(++start, end);
+              return;
+            }
+            fetch(`/chapter/${encodeURIComponent(chapters[start].link)}?k=2124b73d7e2e1945&t=1468223717`)
+            .then(res => res.json())
+            .then( data => {
+              let content = _.has(data.chapter, 'cpContent') ?  data.chapter.cpContent :  data.chapter.body;
+              data.chapter.cpContent =  '   ' + content.replace(/\n/g, "\n   ");
+              chapters[start].chapter = data.chapter; 
+              bookList[pos].list.chapters = chapters;
+              storejs.set('bookList', bookList);
+              download(++start, end);
+            })
+            .catch(error => message.info(error))
+          }
+
+          for(let i = 0; i < bookList[pos].readIndex; i++) {
+            delete chapters[i].chapter;
+          }
+
+          download(bookList[pos].readIndex, bookList[pos].readIndex + 100);
+        },
+        onCancel() {
+        },
       });
     }
 
@@ -142,6 +191,7 @@ class Read extends React.Component{
     if (list !== null) {
       list.scrollTop = 45 * (this.index - 3);
     }
+  
   }
 
 

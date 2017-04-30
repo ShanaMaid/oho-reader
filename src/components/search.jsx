@@ -22,7 +22,6 @@ class Search extends React.Component{
     this.flag = this.state.searchValue.length ? false : true; 
 
     this.tagColorArr = this.state.searchHistory.map(item => randomcolor({luminosity: 'dark'}));
-    console.log(this.tagColorArr)
     this.clearHistory = () => {
       let searchHistory = [];
       this.setState({searchHistory});
