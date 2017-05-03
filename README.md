@@ -10,7 +10,7 @@ Github项目地址:[https://github.com/ShanaMaid/oho-reader](https://github.com/
 推荐一个之前用Vue全家桶写的 [网易云音乐PC端 web版本](https://github.com/ShanaMaid/vue-163-music)
 
 ## 在线版
-[http://oho.shanamaid.top/](http://oho.shanamaid.top/)
+[http://oho.shanalab.top/](http://oho.shanalab.top/)
 
 ## 部分效果截图
 ![3](screenshot/3.gif)
