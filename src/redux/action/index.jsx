@@ -84,9 +84,9 @@ export const addBook = (data) => {
     fetch(`/api/toc?view=summary&book=${data._id}`)
       .then(res => res.json())
       .then(data => {
-        let sourceId = data[0]._id; 
+        let sourceId = data.length > 1 ? data[1]._id : data[0]._id; 
         for (let item of data) {
-          if (item.source === 'shuhaha') {
+          if (item.source === 'my176') {
             sourceId = item._id;
           }
         }
