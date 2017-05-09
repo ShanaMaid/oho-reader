@@ -161,7 +161,7 @@ export const refreshBook = () => {
     });
 
     let list = bookSourceIdArr.map((item, index) => {
-      return fetch(`/api/toc/'${item}?view=chapters`)
+      return fetch(`/api/toc/${item}?view=chapters`)
       .then(res => res.json())
       .then(data => {
         localBookList[index].list = data;
