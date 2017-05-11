@@ -35,7 +35,6 @@ class Read extends React.Component{
         message.info('已经是最新的一章了！');
         this.index = this.chapterList.length - 1;
         index = this.index;
-        return;
       }
 
       

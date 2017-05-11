@@ -24,6 +24,7 @@ class ChangeOrigin extends React.Component{
       .then(data => {
         let bookList = storejs.get('bookList');
         bookList[this.pos].list = data;
+        bookList[this.pos].sourceId = id;
         storejs.set('bookList', bookList);
         this.props.history.push({pathname: `/read/${this.pos}`});
       })
