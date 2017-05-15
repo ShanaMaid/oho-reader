@@ -176,6 +176,11 @@ class Read extends React.Component{
 
   componentWillMount() {
     this.getChapter(this.index);
+
+    // 刷新最近阅读的书籍列表顺序
+    let bookList = storejs.get('bookList');
+    bookList.unshift(bookList.splice(this.pos, 1)[0]);
+    storejs.set('bookList', bookList);
   }
 
   componentDidUpdate(prevProps, prevState) {

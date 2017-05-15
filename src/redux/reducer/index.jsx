@@ -39,7 +39,7 @@ export const bookList = (state, action={}) => {
       if (state.id.has(action.data._id)) {
         return state;
       }
-      state.list.push(action.data);
+      state.list.unshift(action.data);
       state.id.add(action.data._id);
       storejs.set('bookList', state.list);
       storejs.set('bookIdList', Array.from(state.id));
