@@ -16,7 +16,7 @@ class Read extends React.Component{
     this.pos = this.props.match.params.id; //书籍在列表的序号
     this.index = storejs.get('bookList')[this.pos].readIndex || 0; //章节号
     this.chapterList = storejs.get('bookList')[this.pos].list.chapters;
-    this.readSetting = storejs.get('readSetting') || {fontSize: '12', backgroundColor: 'rgb(196, 196 ,196)'};
+    this.readSetting = storejs.get('readSetting') || {fontSize: '18', backgroundColor: 'rgb(196, 196 ,196)'};
     this.state = {
       loading: true,
       chapter: '',
@@ -181,7 +181,9 @@ class Read extends React.Component{
     let bookList = storejs.get('bookList');
     bookList.unshift(bookList.splice(this.pos, 1)[0]);
     storejs.set('bookList', bookList);
+    this.pos = 0;
   }
+
 
   componentDidUpdate(prevProps, prevState) {
     if (this.flag) { //加载上次阅读进度

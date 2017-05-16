@@ -37,8 +37,12 @@ class Search extends React.Component{
       };
       //更新搜索历史
       let searchHistory = new Set(this.state.searchHistory);
-      searchHistory = Array.from(searchHistory.add(value)).reverse();
-      storejs.set('searchHistory', searchHistory);
+      if (!searchHistory.has(value)) {
+        searchHistory = this.state.searchHistory;
+        searchHistory.unshift(value);
+        storejs.set('searchHistory', searchHistory);
+      }
+      
 
       this.tagColorArr.push(randomcolor({luminosity: 'dark'}));
       
