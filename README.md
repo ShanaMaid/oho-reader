@@ -58,7 +58,7 @@ npm run serve
 npm run dist
 
 # 实际环境
-cd server
+cd dist
 node app.js
 访问 http://localhost:3001/
 ```
