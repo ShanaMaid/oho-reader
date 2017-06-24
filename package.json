@@ -5,7 +5,7 @@
   "main": "",
   "scripts": {
     "clean": "rimraf dist/*",
-    "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist",
+    "copy": "copyfiles -f ./src/index.html ./src/favicon.ico ./dist && copyfiles -u 1 ./src/fonts/*.woff ./src/css/*.css ./dist/assets/",
     "dist": "npm run copy & webpack --env=dist",
     "lint": "eslint ./src",
     "posttest": "npm run lint",
@@ -82,6 +82,7 @@
     "react-router": "^4.0.0",
     "react-router-dom": "^4.0.0",
     "react-tappable": "^0.8.4",
+    "jss-node": "^0.6.3",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "store": "^2.0.4",

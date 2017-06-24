@@ -9,6 +9,7 @@
 
 const path = require('path');
 const srcPath = path.join(__dirname, '/../src');
+const dfltHost = '127.0.0.1';
 const dfltPort = 8000;
 
 /**
@@ -25,6 +26,11 @@ function getDefaultModules() {
       }
     ],
     loaders: [
+      {
+        test: /\/assets\/css\/.*\.css$/,
+        exclude: /node_modules/,
+        loader: 'url-loader?limit=8192&name=css/[name].[ext]'
+      },
       {
         test: /\.css$/,
         loader: 'style-loader!css-loader'
@@ -46,8 +52,14 @@ function getDefaultModules() {
         loader: 'style-loader!css-loader!stylus-loader'
       },
       {
-        test: /\.(png|jpg|gif|woff|woff2)$/,
-        loader: 'url-loader?limit=8192'
+        test: /\.(png|jpg|gif)$/,
+        exclude: /node_modules/,
+        loader: 'url-loader?limit=8192&name=images/[name].[ext]'
+      },
+      {
+        test: /\.(woff|woff2)$/,
+        exclude: /node_modules/,
+        loader: 'url-loader?limit=8192&name=fonts/[name].[ext]'
       },
       {
         test: /\.(mp4|ogg|svg)$/,
@@ -60,6 +72,7 @@ function getDefaultModules() {
 module.exports = {
   srcPath: srcPath,
   publicPath: '/assets/',
+  host: dfltHost,
   port: dfltPort,
   getDefaultModules: getDefaultModules
 };

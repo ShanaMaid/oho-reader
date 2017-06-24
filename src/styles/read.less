@@ -1,4 +1,41 @@
 :local {
+  @font-face {
+    font-family: 'XHei-Believe';
+    src: url('/assets/fonts/XHei-Believe.woff') format('woff');
+  }
+  @font-face {
+    font-family: 'XHei-Believe';
+    src: url('/assets/fonts/XHei-Believe-Bold.woff') format('woff');
+    font-weight: bold;
+  }
+  @font-face {
+    font-family: 'XHei-Classical';
+    src: url('/assets/fonts/XHei-Classical.woff') format('woff');
+  }
+  @font-face {
+    font-family: 'XHei-Classical';
+    src: url('/assets/fonts/XHei-Classical-Bold.woff') format('woff');
+    font-weight: bold;
+  }
+  @font-face {
+    font-family: 'XSung-Clear';
+    src: url('/assets/fonts/XSung-Clear.woff') format('woff');
+  }
+  @font-face {
+    font-family: 'XSung-Clear';
+    src: url('/assets/fonts/XSung-Clear-Bold.woff') format('woff');
+    font-weight: bold;
+  }
+  @font-face {
+    font-family: 'XSung-Classical';
+    src: url('/assets/fonts/XSung-Classical.woff') format('woff');
+  }
+  @font-face {
+    font-family: 'XSung-Classical';
+    src: url('/assets/fonts/XSung-Classical-Bold.woff') format('woff');
+    font-weight: bold;
+  }
+
   .header{
     background: rgb(25,25,25);
     padding:0px 10px;
@@ -65,6 +102,31 @@
             margin-right: 20px;
           }
         }
+	.lineHeight,.fontWeight {
+          svg{
+            fill: white;
+          }
+          span{
+            margin: 0 0 0 20px;
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+    .moreSetting{
+      outline: none;
+      & > div{
+        width: 100vw;
+        height: 120px;
+        background-color: rgba(25, 25, 25, 0.8);
+        position: absolute;
+        left: 0px;
+        top: -120px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        div{
+          padding-left: 20px;
+        }
       }
     }
   }
@@ -90,6 +152,7 @@
     min-height: 100vh;
     height: 100vh;
     overflow-y: scroll;
+    white-space: pre-wrap;
   }
   .control{
     font-size: 1.0rem;
