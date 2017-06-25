@@ -17,7 +17,6 @@ class AppComponent extends React.Component {
       bookList: this.props.bookList.list,
       refresh: false
     }
-    console.log(this.props.bookList.list)
     this.menu = (
       <Menu>
         <Menu.Item key="0">

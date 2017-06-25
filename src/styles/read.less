@@ -42,6 +42,7 @@
     position: fixed;
     width: 100vw;
     top: 0px;
+    z-index: 1;
   }
   
   .head-font-base{
@@ -66,6 +67,7 @@
     color: white;
     text-align: center;
     justify-content: space-around;
+    z-index: 1;
     i {
       color: white;
       font-size: 1.2rem;
@@ -96,12 +98,18 @@
         .color{
           i{
             display: inline-block;
-            width: 30px;
-            height: 30px;
+            width: 20px;
+            height: 20px;
             border-radius: 100%;
             margin-right: 20px;
           }
         }
+        .flowDirection {
+          margin: 0;
+          svg{
+            fill: white;
+          }
+	}
 	.lineHeight,.fontWeight {
           svg{
             fill: white;
@@ -145,14 +153,69 @@
     float: left;
   }
 
+  .navi{
+    margin: 0 auto;
+    span,meter{
+      position: absolute;
+    }
+    .up{
+      height: 20vh;
+      width: 76vw;
+      right: 2vw;
+      top: 1vh;
+    }
+    .down{
+      height: 20vh;
+      width: 76vw;
+      left: 2vw;
+      bottom: 1vh;
+    }
+    .left{
+      height: 78vh;
+      width: 20vw;
+      left: 2vw;
+      top: 1vh;
+    }
+    .right{
+      height: 78vh;
+      width: 20vw;
+      right: 2vw;
+      bottom: 1vh;
+    }
+    .battery{
+      height: 8px;
+      width: 20px;
+      bottom: 3px;
+      left: 20px;
+      &::-webkit-meter-bar{
+        background: none;
+        border: 1px solid #ccc;
+        border-radius: 2px;
+      }
+      &::-webkit-meter-optimum-value{
+        background-color: #ccc;
+	background-image: none;
+      }
+    }
+    .pagination{
+      bottom: 1px;
+      font-size: 0.5rem;
+    }
+    .clock{
+      bottom: 1px;
+      right: 20px;
+      font-size: 0.5rem;
+    }
+  }
   .box{
     padding: 0px 20px;
     padding-bottom: 100px;
     font-size: 1.2rem;
     min-height: 100vh;
     height: 100vh;
+    overflow-x: hidden;
     overflow-y: scroll;
-    white-space: pre-wrap;
+    white-space: pre-line;
   }
   .control{
     font-size: 1.0rem;

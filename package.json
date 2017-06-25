@@ -70,7 +70,9 @@
     "babel-plugin-import": "^1.1.1",
     "babel-preset-es2015": "^6.24.0",
     "core-js": "^2.0.0",
+    "ftellipsis": "^0.2.3",
     "http-proxy-middleware": "^0.17.4",
+    "jss-node": "^0.6.3",
     "normalize.css": "^4.0.0",
     "randomcolor": "^0.4.4",
     "react": "^15.0.0",
@@ -82,11 +84,10 @@
     "react-router": "^4.0.0",
     "react-router-dom": "^4.0.0",
     "react-tappable": "^0.8.4",
-    "jss-node": "^0.6.3",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
     "store": "^2.0.4",
-    "store.js": "^1.0.4",
+    "store.js": "^1.1.0",
     "underscore": "^1.8.3",
     "whatwg-fetch": "^2.0.3"
   }

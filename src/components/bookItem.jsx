@@ -17,7 +17,7 @@ class BookItem extends React.Component{
       onOk: () => {
         this.props.deleteBook(this.props.data);
       },
-      onCancel() {},
+      onCancel() {}
     });
   }
   }
