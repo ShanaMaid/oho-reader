@@ -67,10 +67,11 @@ class Read extends React.Component{
           return this.setState({loading: false});
         }
         let content = _.has(data.chapter, 'cpContent') ?  data.chapter.cpContent :  data.chapter.body;
-        if (data.chapter.cpTitle == '.') {
-          data.chapter.cpTitle = this.chapterList[index].title;
+        if (data.chapter.title == '.') {
+          data.chapter.title = this.chapterList[index].title;
         }
         data.chapter.cpContent =  '　　' + content.replace(/\n/g, '\n　　');
+        data.chapter.cpContent.trimRight('\n');
 
         let bookList = storejs.get('bookList');
         bookList[this.pos].readIndex = index;
@@ -291,7 +292,13 @@ class Read extends React.Component{
           if (that.ellipsis.child == undefined || that.ellipsis.child == null) {
             that.ellipsis.calc();
             that.totalLine = Math.ceil(that.totalHeight / that.ellipsis.lineHeight);
-            that.totalPage = Math.floor(that.totalLine / that.ellipsis.linesPerColumn);
+            that.totalPage = Math.ceil(that.totalLine / that.ellipsis.linesPerColumn);
+            that.pageHeight = that.ellipsis.lineHeight * that.ellipsis.linesPerColumn;
+            var newline = Math.floor(that.totalPage * that.pageHeight / that.ellipsis.lineHeight - that.totalLine);
+            that.state.chapter.cpContent += Array(newline + 1).join('\n');
+            that.ellipsis.calc();
+            that.totalLine = Math.ceil(that.totalHeight / that.ellipsis.lineHeight);
+            that.totalPage = Math.floor(that.totalLine / that.ellipsis.linesPerColumn) + 1;
             that.pageHeight = that.ellipsis.lineHeight * that.ellipsis.linesPerColumn;
             //ellipsis.set();
             //next page: scrollTop += pageHeight;
@@ -382,6 +389,9 @@ class Read extends React.Component{
             .then(res => res.json())
             .then( data => {
               let content = _.has(data.chapter, 'cpContent') ?  data.chapter.cpContent :  data.chapter.body;
+          if (data.chapter.title == '.') {
+            data.chapter.title = this.chapterList[index].title;
+          }
               data.chapter.cpContent =  '　　' + content.replace(/\n/g, '\n　　');
               chapters[start].chapter = data.chapter;
               bookList[pos].list.chapters = chapters;
@@ -469,6 +479,7 @@ class Read extends React.Component{
     this.getClock = () => {
       var now = new Date();
       this.setState({clock: ('0' + now.getHours()).substr(-2) + ':' + ( '0' + now.getMinutes()).substr(-2)});
+      this.clockLock = true;
     }
   }
 
@@ -491,7 +502,21 @@ class Read extends React.Component{
   componentDidUpdate(prevProps, prevState) {
     if (this.flag) { //加载上次阅读进度
       let bookList = storejs.get('bookList');
-      this.refs.box.scrollTop = _.has(bookList[this.pos], 'readScroll') ? bookList[this.pos].readScroll : 0;
+      var scrollTop = _.has(bookList[this.pos], 'readScroll') ? bookList[this.pos].readScroll : 0;
+      if (scrollTop > 0) {
+        if (this.readSetting.flowDirection == 'horizontal') {
+          var that = this;
+          setTimeout(function () {
+            that.changeFlowVertical();
+            that.refs.box.scrollTop = scrollTop;
+            that.changeFlowHorizontal();
+          }, 50);
+        } else {
+          this.refs.box.scrollTop = 0;
+        }
+      } else {
+        this.refs.box.scrollTop = 0;
+      }
       this.flag = false;
     }
     else if(prevState.loading !== this.state.loading){
@@ -531,10 +556,15 @@ class Read extends React.Component{
           }
           <div className={styles.navi}>
             <span className={styles.up} onClick={this.prevPage}></span>
+            <span className={styles.uppad}></span>
             <span className={styles.down} onClick={this.nextPage}></span>
+            <span className={styles.downpad}></span>
             <span className={styles.left} onClick={this.prevPage}></span>
+            <span className={styles.leftpad}></span>
             <span className={styles.right} onClick={this.nextPage}></span>
+            <span className={styles.rightpad}></span>
             { this.state.fullScreen ? <meter low="0.2" value={this.state.battery} className={styles.battery}></meter> : null }
+            { this.state.showPagination ? <span className={styles.title} style={{'color': this.state.readSetting.color}}>{this.state.chapter.title}</span> : null }
             { this.state.showPagination ? <span className={styles.pagination} style={{'color': this.state.readSetting.color}}>{this.state.currentPage}/{this.state.totalPage}</span> : null }
             { this.state.fullScreen ? <span className={styles.clock} style={{'color': this.state.readSetting.color}}>{this.state.clock}</span> : null }
           </div>
@@ -542,7 +572,7 @@ class Read extends React.Component{
           {this.state.loading ? '' : (()=>{
             return (
               <div>
-                <h1>{this.state.chapter.cpTitle}</h1>
+                <h1>{this.state.chapter.title}</h1>
                 <div>{this.state.chapter.cpContent}</div>
                 <h1 ref='navi' className={styles.control}>
                   <span onClick={this.prevChapter}>上一章</span>
