@@ -33,20 +33,20 @@ class Read extends React.Component{
       clock: ''
     }
     this.ellipsis = null;
-    this.getChapter = (index) => {
-      if (index < 0) {
+    this.getChapter = (index, prefetch=false) => {
+      if (!prefetch && index < 0) {
         message.info('已经是第一章了！');
         this.index = 0;
         return;
       }
-      else if(index >= this.chapterList.length) {
+      else if(!prefetch && index >= this.chapterList.length) {
         message.info('已经是最新的一章了！');
         this.index = this.chapterList.length - 1;
         index = this.index;
       }
 
       
-      this.setState({loading: true});
+      if (!prefetch) this.setState({loading: true});
       let chapters = storejs.get('bookList')[this.pos].list.chapters;
       if (_.has(chapters[index], 'chapter')) {
         this.setState({loading: false, chapter: chapters[index].chapter}, () => {
@@ -57,12 +57,11 @@ class Read extends React.Component{
         storejs.set('bookList', bookList);
         return;
       }
-
       
       fetch(`/chapter/${encodeURIComponent(this.chapterList[index].link)}?k=2124b73d7e2e1945&t=1468223717`)
       .then(res => res.json())
       .then( data => {
-        if (!data.ok) {
+        if (!prefetch && !data.ok) {
           message.info('章节内容丢失！');
           return this.setState({loading: false});
         }
@@ -77,9 +76,10 @@ class Read extends React.Component{
         bookList[this.pos].readIndex = index;
         storejs.set('bookList', bookList);
 
-        this.setState({loading: false, chapter: data.chapter})
+        if (!prefetch) this.setState({loading: false, chapter: data.chapter})
       })
       .catch(error => message.info(error))
+      if (prefetch) return;
 
       var that = this;
       if (this.ellipsis) {
@@ -105,6 +105,7 @@ class Read extends React.Component{
     this.nextChapter = (e) => {
       e.stopPropagation();
       this.getChapter(++this.index);
+      this.getChapter(this.index + 1, true);
     }
     this.prevChapter = (e) => {
       e.stopPropagation();
@@ -531,7 +532,7 @@ class Read extends React.Component{
 
   render() {
     return (
-      <Spin className='loading' spinning={this.state.loading} tip="章节内容加载中">
+      <Spin className='loading' style={{'background-color': this.state.readSetting.backgroundColor}} spinning={this.state.loading} delay={500} tip="章节内容加载中">
         <Layout >
           <Modal
             className="chapterList"
