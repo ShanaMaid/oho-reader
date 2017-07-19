@@ -63,6 +63,12 @@ node app.js
 访问 http://localhost:3001/
 ```
 
+Docker:
+方便在Docker下部署
+[Docker-file](https://hub.docker.com/r/esme518/docker-oho-reader/)
+
+感谢[@esme518](https://github.com/esme518)提供
+
 ## 实现功能
 - [x] 小说搜索
 - [x] 小说详情
