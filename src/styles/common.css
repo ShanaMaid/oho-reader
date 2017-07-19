@@ -34,5 +34,7 @@ table { border-collapse:collapse; border-spacing:0; }
   background-color: rgb(225,225,226);
 }
 
-
+.ant-spin-container {
+  transition: initial;
+}
 

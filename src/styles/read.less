@@ -1,10 +1,48 @@
 :local {
+  @font-face {
+    font-family: 'XHei-Believe';
+    src: url('/assets/fonts/XHei-Believe.woff') format('woff');
+  }
+  @font-face {
+    font-family: 'XHei-Believe';
+    src: url('/assets/fonts/XHei-Believe-Bold.woff') format('woff');
+    font-weight: bold;
+  }
+  @font-face {
+    font-family: 'XHei-Classical';
+    src: url('/assets/fonts/XHei-Classical.woff') format('woff');
+  }
+  @font-face {
+    font-family: 'XHei-Classical';
+    src: url('/assets/fonts/XHei-Classical-Bold.woff') format('woff');
+    font-weight: bold;
+  }
+  @font-face {
+    font-family: 'XSung-Clear';
+    src: url('/assets/fonts/XSung-Clear.woff') format('woff');
+  }
+  @font-face {
+    font-family: 'XSung-Clear';
+    src: url('/assets/fonts/XSung-Clear-Bold.woff') format('woff');
+    font-weight: bold;
+  }
+  @font-face {
+    font-family: 'XSung-Classical';
+    src: url('/assets/fonts/XSung-Classical.woff') format('woff');
+  }
+  @font-face {
+    font-family: 'XSung-Classical';
+    src: url('/assets/fonts/XSung-Classical-Bold.woff') format('woff');
+    font-weight: bold;
+  }
+
   .header{
     background: rgb(25,25,25);
     padding:0px 10px;
     position: fixed;
     width: 100vw;
     top: 0px;
+    z-index: 1;
   }
   
   .head-font-base{
@@ -29,6 +67,7 @@
     color: white;
     text-align: center;
     justify-content: space-around;
+    z-index: 1;
     i {
       color: white;
       font-size: 1.2rem;
@@ -59,11 +98,42 @@
         .color{
           i{
             display: inline-block;
-            width: 30px;
-            height: 30px;
+            width: 20px;
+            height: 20px;
             border-radius: 100%;
             margin-right: 20px;
           }
+        }
+        .flowDirection {
+          margin: 0;
+          svg{
+            fill: white;
+          }
+	}
+	.lineHeight,.fontWeight {
+          svg{
+            fill: white;
+          }
+          span{
+            margin: 0 0 0 20px;
+            font-size: 1rem;
+          }
+        }
+      }
+    }
+    .moreSetting{
+      outline: none;
+      & > div{
+        width: 100vw;
+        height: 120px;
+        background-color: rgba(25, 25, 25, 0.8);
+        position: absolute;
+        left: 0px;
+        top: -120px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        div{
+          padding-left: 20px;
         }
       }
     }
@@ -83,13 +153,102 @@
     float: left;
   }
 
+  .navi{
+    margin: 0 auto;
+    span,meter{
+      position: absolute;
+    }
+    .up{
+      height: 20vh;
+      width: 76vw;
+      right: 2vw;
+      top: 1vh;
+    }
+    .uppad{
+      height: 1vh;
+      width: 100vw;
+      right: 0vw;
+      top: 0vh;
+    }
+    .down{
+      height: 20vh;
+      width: 76vw;
+      left: 2vw;
+      bottom: 1vh;
+    }
+    .downpad{
+      height: 1vh;
+      width: 100vw;
+      left: 0vw;
+      bottom: 0vh;
+    }
+    .left{
+      height: 78vh;
+      width: 20vw;
+      left: 2vw;
+      top: 1vh;
+    }
+    .leftpad{
+      height: 100vh;
+      width: 2vw;
+      left: 0vw;
+      top: 0vh;
+    }
+    .right{
+      height: 78vh;
+      width: 20vw;
+      right: 2vw;
+      bottom: 1vh;
+    }
+    .rightpad{
+      height: 100vh;
+      width: 2vw;
+      right: 0vw;
+      bottom: 0vh;
+    }
+    .battery{
+      height: 8px;
+      width: 20px;
+      bottom: 3px;
+      left: 20px;
+      &::-webkit-meter-bar{
+        background: none;
+        border: 1px solid #ccc;
+        border-radius: 2px;
+      }
+      &::-webkit-meter-optimum-value{
+        background-color: #ccc;
+	background-image: none;
+      }
+      &::-webkit-meter-suboptimum-value{
+        background-color: #ff4136;
+	background-image: none;
+      }
+    }
+    .title{
+      bottom: 1px;
+      left: 45px;
+      font-size: 0.5rem;
+    }
+    .pagination{
+      bottom: 1px;
+      font-size: 0.5rem;
+    }
+    .clock{
+      bottom: 1px;
+      right: 20px;
+      font-size: 0.5rem;
+    }
+  }
   .box{
     padding: 0px 20px;
     padding-bottom: 100px;
     font-size: 1.2rem;
     min-height: 100vh;
     height: 100vh;
+    overflow-x: hidden;
     overflow-y: scroll;
+    white-space: pre-line;
   }
   .control{
     font-size: 1.0rem;

@@ -19,7 +19,7 @@ class Search extends React.Component{
       loading: false,
       searchHistory: storejs.get('searchHistory') || []
     };
-    this.flag = this.state.searchValue.length ? false : true; 
+    this.flag = this.state.searchValue.length ? false : true;
 
     this.tagColorArr = this.state.searchHistory.map(item => randomcolor({luminosity: 'dark'}));
     this.clearHistory = () => {
@@ -34,7 +34,7 @@ class Search extends React.Component{
       if (new Set(value).has(' ') || value === '') {
         alert('宝贝儿！别输入空格或者空哦！');
         return;
-      };
+      }
       //更新搜索历史
       let searchHistory = new Set(this.state.searchHistory);
       if (!searchHistory.has(value)) {

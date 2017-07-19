@@ -11,6 +11,7 @@ let additionalPaths = [];
 
 module.exports = {
   additionalPaths: additionalPaths,
+  host: defaultSettings.host,
   port: defaultSettings.port,
   debug: true,
   devtool: 'eval',
@@ -21,9 +22,11 @@ module.exports = {
     chunkFilename: '[name].[chunkhash:5].chunk.js'
   },
   devServer: {
+    disableHostCheck: true,
     contentBase: './src/',
     historyApiFallback: true,
     hot: true,
+    host: defaultSettings.host,
     port: defaultSettings.port,
     publicPath: defaultSettings.publicPath,
     noInfo: false,
