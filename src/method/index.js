@@ -29,7 +29,7 @@ export const url2Real = (url) => {
       return 'http://api.zhuishushenqi.com' + url;
     }
     else{
-      return url.replace(/\/agent\//, '');
+      return decodeURIComponent(url.replace(/\/agent\//, ''));
     }
 }
 
